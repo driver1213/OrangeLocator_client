@@ -16,12 +16,8 @@ import DigitalCodeScreen from './src/screens/DigitalCodeScreen';
 import ResolveAuthScreen from './src/screens/ResolveAuthScreen'
 import AccountScreen from './src/screens/AccountScreen';
 import StillMapScreen from './src/screens/StillMapScreen';
+
 const switchNavigator = createSwitchNavigator({
-  // ResolveAuth: ResolveAuthScreen,
-  // loginFlow: createStackNavigator({
-  //   Signup: SignupScreen,
-  //   Signin: SigninScreen
-  // }),
   mainFlow: createBottomTabNavigator({
     screenFlow: createStackNavigator({
       ChooseSite: ChooseSiteScreen,
@@ -31,19 +27,15 @@ const switchNavigator = createSwitchNavigator({
       ManualUpdate: ManualUpdateScreen,
       DigitalCode: DigitalCodeScreen,
     }),
-    ManualUpdate: ManualUpdateScreen,
-    Account: AccountScreen,
+    
     Map: MapScreen,
     StillMap:StillMapScreen,
     
-
-
-
-
     loginFlow: createStackNavigator({
     Signup: SignupScreen,
     Signin: SigninScreen
   }),
+  Account: AccountScreen
   }),
 });
 

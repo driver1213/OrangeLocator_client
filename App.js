@@ -35,7 +35,7 @@ const switchNavigator = createSwitchNavigator({
     Signup: SignupScreen,
     Signin: SigninScreen
   }),
-  Account: AccountScreen
+  Signout: AccountScreen
   }),
 });
 

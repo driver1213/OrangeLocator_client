@@ -10,14 +10,17 @@ const AccountScreen = () => {
 
     return (
         <SafeAreaView forceInset={{ top: 'always' }}>
-            <Text style={{ fontSize: 48 }}>Account Screen</Text> 
-            <Spacer>
-                <Button title="Sign Out" onPress={signout} />
-            </Spacer>
+            {/* <Text style={{ fontSize: 48 }}>Account Screen</Text>  */}
+                <Button style={styles.container} title="Sign Out" onPress={signout} />
         </SafeAreaView>
     )
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    container: {
+        justifyContent: 'center',
+        marginTop: 200
+    },
 
+})
 export default AccountScreen

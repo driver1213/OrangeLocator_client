@@ -1,6 +1,6 @@
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
+import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button ,FlatList } from 'react-native';
 import { connect } from 'react-redux';
 
 
@@ -19,6 +19,9 @@ class StillMapScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+
+      loading: false,
+
       currentX: 100,
       currentY: 300,
 
@@ -31,49 +34,35 @@ class StillMapScreen extends React.Component {
       currentZoom: 1,
       iconZoomedSize: 33,
 
-      dallData:{},
-
+      data: [],
     }
   }
 
-  // fetch('http://192.168.31.43:3000/stores)
-  //   .then(results => results.json())
-  //   .then(data => {
-  //   this.setState({
-  //     data: data
-  //   })
-  // })
+  // componentDidMount() {
+  //   fetch('http://192.168.31.43:3000/stores')
+  //     .then(results => results.json())
+  //     .then(data => {
+  //       this.setState({
+  //         data: data.data
+  //       })
+  //     });
+  // }
 
-
-  componentDidMount() {
-
-
-    axios.get("http://192.168.31.43:3000/stores")
-
-      .then(res => {
-
-        this.setState({
-          allData:res.data,
-
-        },
-        ()=>{
-          console.log(this.state.allData.data[0].name)
-        }
-       
-        );
-      })
+  componentWillMount(){
+    this.fetchData();
   }
+
+ fetchData = async () =>{
+   const res = await fetch('http://192.168.31.43:3000/stores');
+   const json=await res.json();
+   this.setState({data: json.data});
+ }
+
+
 
 
   logOutZoomState = (event, gestureState, zoomableViewEventObject) => {
-    // console.log('');
-    // console.log('');
-    // console.log('-------------');
-    // console.log('Event: ', event);
-    // console.log('GestureState: ', gestureState);
-    // console.log('ZoomableEventObject: ', zoomableViewEventObject);
-    // console.log('');
-    // console.log(`Zoomed from ${zoomableViewEventObject.lastZoomLevel} to  ${zoomableViewEventObject.zoomLevel}`);
+
     this.setState({ currentZoom: zoomableViewEventObject.zoomLevel });
   }
 
@@ -89,10 +78,23 @@ class StillMapScreen extends React.Component {
 
 
   render() {
+    if (this.state.loading) {
+      return (<View><Text>Data Loading</Text></View>)
+    }
+    else
+      console.log("first store is :", this.state.data[0]);
+      // console.log(this.state.data.data[2]);
+    //   var storeData = this.state.data;
+    // console.log(storeData);
 
-    const { currentZoom } = this.state
+
+
+
+
+    console.log(this.state.currentZoom);
+    const { currentZoom } = this.state;
     const zoomedIconSize = Math.round(33 / currentZoom);
-    console.log(zoomedIconSize);
+    // console.log(zoomedIconSize);
     // this.setState({ iconZoomedSize: 33 / this.state.currentZoom });
     // console.log('icon size', this.state.iconZoomedSize);
 
@@ -100,7 +102,7 @@ class StillMapScreen extends React.Component {
 
 
 
-    /////////////////////////// Style /////////
+    /////////////////////////// coordinate compensate /////////
     // let testX= (this.state.destX/this.state.width*100*1.5).toFixed(2)+"%";
     // let testX= Math.round(this.state.destX/this.state.width*10000/1.5)/100;
     // let testX= Math.round(this.state.destX*this.state.width/1321);
@@ -309,10 +311,11 @@ class StillMapScreen extends React.Component {
         <Text style={styles.testInfo}>DestX:{this.state.destX}</Text>
         <Text>view width: {this.state.width}</Text>
         <Text>view height: {this.state.height}</Text>
-        <Text>{this.state.allData.data[0].name}</Text>
+        {/* <Text>{this.state.data.data[2].name}</Text> */}
         {/* <Text>TestX: {testX}</Text>
         <Text>TestY: {testY}</Text> */}
         {/* <Text>Percent from Top {PctVHfromTop}</Text> */}
+
 
 
 

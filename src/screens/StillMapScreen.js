@@ -31,7 +31,7 @@ class StillMapScreen extends React.Component {
       currentZoom: 1,
       iconZoomedSize: 33,
 
-      dallData:{},
+      dallData:[],
 
     }
   }
@@ -53,11 +53,11 @@ class StillMapScreen extends React.Component {
       .then(res => {
 
         this.setState({
-          allData:res.data,
+          data:res.data.data,
 
         },
         ()=>{
-          console.log(this.state.allData.data[0].name)
+          console.log(this.state.data[0].name)
         }
        
         );
@@ -309,7 +309,7 @@ class StillMapScreen extends React.Component {
         <Text style={styles.testInfo}>DestX:{this.state.destX}</Text>
         <Text>view width: {this.state.width}</Text>
         <Text>view height: {this.state.height}</Text>
-        <Text>{this.state.allData.data[0].name}</Text>
+        <Text>{this.state.data[0].name}</Text>
         {/* <Text>TestX: {testX}</Text>
         <Text>TestY: {testY}</Text> */}
         {/* <Text>Percent from Top {PctVHfromTop}</Text> */}

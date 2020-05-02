@@ -19,6 +19,9 @@ class StillMapScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+
+      loading: false,
+
       currentX: 100,
       currentY: 300,
 
@@ -31,49 +34,51 @@ class StillMapScreen extends React.Component {
       currentZoom: 1,
       iconZoomedSize: 33,
 
-      dallData:[],
-
+      data: {
+        "message": "Found the stores",
+        "data":
+          [
+            {
+              "_id": "5ea9cf9b72593a331a1f41b5",
+              "name": "La Dolce Vita Cafe",
+              "info": {
+                "phone": "(713) 652-3197",
+                "address": "1600 Smith St, Tunnel Level, Houston, TX 77002"
+              },
+              "macAddress": "",
+              "imgUrl": "",
+              "category": "Food",
+              "locations": [
+                {
+                  "x": "25%",
+                  "y": "53.5%",
+                  "latitude": "29.7544285",
+                  "longitude": "-95.3748376"
+                }
+              ]
+            },
+          ],
+      }
     }
   }
 
-  // fetch('http://192.168.31.43:3000/stores)
-  //   .then(results => results.json())
-  //   .then(data => {
-  //   this.setState({
-  //     data: data
-  //   })
-  // })
-
-
   componentDidMount() {
-
-
-    axios.get("http://192.168.31.43:3000/stores")
-
-      .then(res => {
-
+    fetch('http://192.168.31.43:3000/stores')
+      .then(results => results.json())
+      .then(data => {
         this.setState({
-          data:res.data.data,
-
-        },
-        ()=>{
-          console.log(this.state.data[0].name)
-        }
-       
-        );
-      })
+          data: data
+        })
+      });
   }
 
 
+
+
+
+
   logOutZoomState = (event, gestureState, zoomableViewEventObject) => {
-    // console.log('');
-    // console.log('');
-    // console.log('-------------');
-    // console.log('Event: ', event);
-    // console.log('GestureState: ', gestureState);
-    // console.log('ZoomableEventObject: ', zoomableViewEventObject);
-    // console.log('');
-    // console.log(`Zoomed from ${zoomableViewEventObject.lastZoomLevel} to  ${zoomableViewEventObject.zoomLevel}`);
+
     this.setState({ currentZoom: zoomableViewEventObject.zoomLevel });
   }
 
@@ -89,8 +94,14 @@ class StillMapScreen extends React.Component {
 
 
   render() {
+    if (this.state.loading) {
+      return (<View><Text>Data Loading</Text></View>)
+    }
+    else
+      console.log(this.state.data);
+    console.log(this.state.currentZoom);
 
-    const { currentZoom } = this.state
+    const { currentZoom } = this.state;
     const zoomedIconSize = Math.round(33 / currentZoom);
     console.log(zoomedIconSize);
     // this.setState({ iconZoomedSize: 33 / this.state.currentZoom });
@@ -100,7 +111,7 @@ class StillMapScreen extends React.Component {
 
 
 
-    /////////////////////////// Style /////////
+    /////////////////////////// coordinate compensate /////////
     // let testX= (this.state.destX/this.state.width*100*1.5).toFixed(2)+"%";
     // let testX= Math.round(this.state.destX/this.state.width*10000/1.5)/100;
     // let testX= Math.round(this.state.destX*this.state.width/1321);
@@ -309,7 +320,7 @@ class StillMapScreen extends React.Component {
         <Text style={styles.testInfo}>DestX:{this.state.destX}</Text>
         <Text>view width: {this.state.width}</Text>
         <Text>view height: {this.state.height}</Text>
-        <Text>{this.state.data[0].name}</Text>
+        {/* <Text>{this.state.data[0].name}</Text> */}
         {/* <Text>TestX: {testX}</Text>
         <Text>TestY: {testY}</Text> */}
         {/* <Text>Percent from Top {PctVHfromTop}</Text> */}

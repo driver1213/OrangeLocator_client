@@ -18,6 +18,8 @@ import Modal from 'react-native-modal';
 
 import { Ionicons } from '@expo/vector-icons';
 
+import { redLinePoints, greenLinePoints, brownLinePoints, blueLinePoints, orangeLinePoints, darkblueLinePoints } from '../context/mapLines';
+
 class MapScreen extends React.Component {
   constructor(props) {
     super(props)
@@ -31,6 +33,7 @@ class MapScreen extends React.Component {
 
       markers: [{
         key: 1,
+        pinColor: "252525",
         title: 'Hello Start',
         coordinates: {
           latitude: 29.75695,
@@ -53,33 +56,39 @@ class MapScreen extends React.Component {
   }
 
 
+
+
   toggleModal = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   };
+
+
+
 
   render() {
 
     // const [err, setErr] = useState(null);
 
-    const startWatching = async () => {
-      try {
-        await requestPermissionsAsync();
-        await watchPositionAsync({
-          accuracy: Accuracy.BestForNavigation,
-          timeInterval: 1000,
-          distanceInterval: 10
-        }, (location) => {
-          console.log(location);
+    // const startWatching = async () => {
+    //   try {
+    //     await requestPermissionsAsync();
+    //     await watchPositionAsync({
+    //       accuracy: Accuracy.BestForNavigation,
+    //       timeInterval: 1000,
+    //       distanceInterval: 10
+    //     }, (location) => {
+    //       console.log(location);
 
-        })
-      } catch (e) {
-        setErr(e);
-      }
+    //     })
+    //   } catch (e) {
+    //     setErr(e);
+    //   }
 
-    }
+    // }
 
+    let mapStyle = require('../context/mapStyle.json');
 
-
+    console.log(mapStyle)
 
 
     // useEffect(() => {
@@ -89,65 +98,87 @@ class MapScreen extends React.Component {
 
 
 
-    let points = [];
-    for (let i = 0; i < 20; i++) {
-      if (i % 2 === 0) {
-        points.push({
-          latitude: 29.756295 + i * 0.00001,
-          longitude: -95.362869 + i * 0.0001
-        });
-      } else {
-        points.push({
 
-          latitude: 29.756295 - i * 0.00001,
-          longitude: -95.362869 + i * 0.0001
-        });
-      }
+    pointsToCoordArry = points => {
+      let coordObj = {}
+      let coordArray = []
 
+      points.map(point => {
+        coordObj = { latitude: point[1], longitude: point[0] }
+        coordArray.push(coordObj)
+      })
+      console.log(coordArray);
+
+      return coordArray;
     }
 
-
+    pointsToCoordArry(redLinePoints);
 
     return (
 
       <View>
-        {/* 
-        <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-          <Text>This is Map Page</Text>
-        </View> */}
+    
         <View>
 
         </View>
 
-
-
         <View>
-
-
-
 
           <MapView style={styles.map}
 
+            customMapStyle={mapStyle}
 
             initialRegion={{
-              latitude: 29.756295,
-              longitude: -95.362869,
-              latitudeDelta: 0.00412,
-              longitudeDelta: 0.0121,
+              latitude: 29.758611,
+              longitude: -95.366792,
+              latitudeDelta: 0.003812,
+              longitudeDelta: 0.00521,
+        
             }}
 
             showsUserLocation={true}
             showsIndoors={true}
             showsIndoorLevelPicker={true}
-            cacheEnabled={true}
+            // cacheEnabled={true}
+            toolbarEnabled = {true}
+            // compassOffset	= {20}
+
 
           >
 
-            <Polyline coordinates={points}
-              strokeColo={"orange"}
-              strokeWidth={5}
 
+            <Polyline coordinates={pointsToCoordArry(redLinePoints)}
+              strokeColor={"red"}
+              strokeWidth={5}
             />
+
+            <Polyline coordinates={pointsToCoordArry(greenLinePoints)}
+              strokeColor={"green"}
+              strokeWidth={5}
+            />
+
+            <Polyline coordinates={pointsToCoordArry(brownLinePoints)}
+              strokeColor={"darkorange"}
+              strokeWidth={5}
+            />
+
+            <Polyline coordinates={pointsToCoordArry(blueLinePoints)}
+              strokeColor={"blue"}
+              strokeWidth={5}
+            />
+
+            <Polyline coordinates={pointsToCoordArry(orangeLinePoints)}
+              strokeColor={"orange"}
+              strokeWidth={5}
+            />
+
+            <Polyline coordinates={pointsToCoordArry(darkblueLinePoints)}
+              strokeColor={"darkblue"}
+              strokeWidth={5}
+            />
+
+
+
 
             {this.state.markers.map(marker => (
               <MapView.Marker
@@ -173,11 +204,11 @@ class MapScreen extends React.Component {
           </TouchableOpacity>
 
           <Modal isVisible={this.state.isModalVisible}>
-          
+
             <View style={{ flex: 1 }}>
               <Text>Hello!</Text>
               <TouchableOpacity style={styles.modalButton} onPress={this.toggleModal}>
-              <Text style={styles.scanText}> Search </Text>
+                <Text style={styles.scanText}> Search </Text>
 
               </TouchableOpacity>
             </View>
@@ -224,7 +255,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: "5%",
     right: 0,
-    
+
   },
 
   bubble1: {

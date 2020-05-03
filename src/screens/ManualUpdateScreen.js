@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
+import { Text, View, StyleSheet, Button, Image } from 'react-native';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 
@@ -40,13 +40,22 @@ export default class QRscan extends React.Component {
           onBarCodeScanned={scanned ? undefined : this.handleBarCodeScanned}
           style={StyleSheet.absoluteFillObject}
         />
-
+           {/* <Image
+         style={{width: 250, height: 250}} 
+         resizeMode="contain"
+         source={require('../assets/images/squaretrackingtarget.png')}
+         /> */}
         {scanned && (
           <Button
             title={'Tap to Scan Again'}
             onPress={() => this.setState({ scanned: false })}
           />
         )}
+         {/* <Image
+         style={{width: 250, height: 250}} 
+         resizeMode="contain"
+         source={require('../assets/images/squaretrackingtarget.png')}
+         /> */}
       </View>
     );
   }

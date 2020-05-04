@@ -19,11 +19,16 @@ import Modal from 'react-native-modal';
 import { Ionicons } from '@expo/vector-icons';
 
 import { redLinePoints, greenLinePoints, brownLinePoints, blueLinePoints, orangeLinePoints, darkblueLinePoints } from '../context/mapLines';
+let mapStyle = require('../context/mapStyle.json');
+
 
 class MapScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+
+      loading: true,
+
       region: {
         latitude: 29.756295,
         longitude: -95.362869,
@@ -31,28 +36,29 @@ class MapScreen extends React.Component {
         longitudeDelta: 0.0121,
       },
 
-      markers: [{
-        key: 1,
-        pinColor: "252525",
-        title: 'Hello Start',
-        coordinates: {
-          latitude: 29.75695,
-          longitude: -95.365869
-        },
+      currentLocationObj: {
+
       },
-      {
-        key: 2,
-        title: 'end',
-        coordinates: {
-          latitude: 29.756290,
-          longitude: -95.362874
-        },
-      }
-      ],
+
+      destObj: {},
 
       isModalVisible: false,
 
+      data: {},
+
     }
+  }
+
+
+  componentWillMount() {
+    fetch('http://192.168.31.43:3000/stores')
+      .then(results => results.json())
+      .then(data => {
+        this.setState({
+          data: data.data,
+          loading: false
+        })
+      });
   }
 
 
@@ -67,34 +73,50 @@ class MapScreen extends React.Component {
 
   render() {
 
-    // const [err, setErr] = useState(null);
+    if (this.state.loading) {
+      return (<View><Text>Data Loading</Text></View>)
+    }
+    else
+      // console.log(this.state.data);
 
-    // const startWatching = async () => {
-    //   try {
-    //     await requestPermissionsAsync();
-    //     await watchPositionAsync({
-    //       accuracy: Accuracy.BestForNavigation,
-    //       timeInterval: 1000,
-    //       distanceInterval: 10
-    //     }, (location) => {
-    //       console.log(location);
+      // const [err, setErr] = useState(null);
 
-    //     })
-    //   } catch (e) {
-    //     setErr(e);
-    //   }
+      // const startWatching = async () => {
+      //   try {
+      //     await requestPermissionsAsync();
+      //     await watchPositionAsync({
+      //       accuracy: Accuracy.BestForNavigation,
+      //       timeInterval: 1000,
+      //       distanceInterval: 10
+      //     }, (location) => {
+      //       console.log(location);
 
-    // }
+      //     })
+      //   } catch (e) {
+      //     setErr(e);
+      //   }
+      // }
 
-    let mapStyle = require('../context/mapStyle.json');
+      // useEffect(() => {
+      //   startWatching();
+      // }, []
+      // );
 
-    console.log(mapStyle)
 
 
-    // useEffect(() => {
-    //   startWatching();
-    // }, []
-    // );
+      ////////////////////////////////
+
+
+
+      /////////////////
+      console.log("+++++++++++++++++++++++++++++++", this.state.data[0].latitude)
+
+
+    // const updatedLocationObj = this.state.data[0];
+ 
+
+    console.log("currentMarker=========================", this.state.currentLocationObj);
+    console.log(this.state.currentLocationObj.latitude);
 
 
 
@@ -107,7 +129,7 @@ class MapScreen extends React.Component {
         coordObj = { latitude: point[1], longitude: point[0] }
         coordArray.push(coordObj)
       })
-      console.log(coordArray);
+      // console.log(coordArray);
 
       return coordArray;
     }
@@ -117,7 +139,7 @@ class MapScreen extends React.Component {
     return (
 
       <View>
-    
+
         <View>
 
         </View>
@@ -133,16 +155,15 @@ class MapScreen extends React.Component {
               longitude: -95.366792,
               latitudeDelta: 0.003812,
               longitudeDelta: 0.00521,
-        
+
             }}
 
             showsUserLocation={true}
             showsIndoors={true}
             showsIndoorLevelPicker={true}
             // cacheEnabled={true}
-            toolbarEnabled = {true}
-            // compassOffset	= {20}
-
+            toolbarEnabled={true}
+          // animateCamera 
 
           >
 
@@ -178,16 +199,25 @@ class MapScreen extends React.Component {
             />
 
 
+            {/* <MapView.Marker
 
 
-            {this.state.markers.map(marker => (
-              <MapView.Marker
-                key={marker.key}
-                // style={slected cate}
-                coordinate={marker.coordinates}
-                title={marker.title}
-              />
-            ))}
+            /> */}
+
+            <Marker await
+
+              key={this.state.currentLocationObj._id}
+              coordinate={{
+                latitude: this.state.data[2].latitude,
+                longitude: this.state.data[2].longitude
+                // latitude: 29.7544285,
+                // longitude: -95.3748376
+              }}
+
+
+              title={this.state.currentLocationObj.name}
+
+            />
 
           </MapView>
           {/* {err ? <Text> Please enable location services </Text>: null} */}

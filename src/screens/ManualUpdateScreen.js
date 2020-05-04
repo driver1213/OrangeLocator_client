@@ -1,10 +1,99 @@
-import React from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+// import * as React from 'react';
+import { Image, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import Constants from 'expo-constants';
+import * as Permissions from 'expo-permissions';
 
-const ManualUpdateScreen = () => {
-    return <Text style={{ fontSize: 48 }}>Manual Update Screen</Text> 
+import { BarCodeScanner } from 'expo-barcode-scanner';
+
+import React, { useState, useEffect } from 'react';
+import { Dimensions } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { Button } from 'react-native-elements';
+
+
+const { width } = Dimensions.get('window');
+const qrSize = width * 0.7;
+
+export default function App({navigation}) {
+  const [hasPermission, setHasPermission] = useState(null);
+  const [scanned, setScanned] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await BarCodeScanner.requestPermissionsAsync();
+      setHasPermission(status === 'granted');
+    })();
+  }, []);
+
+  const handleBarCodeScanned = ({ type, data }) => {
+    setScanned(true);
+    // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    navigation.navigate("MapScreen",data);
+    
+  };
+
+  if (hasPermission === null) {
+    return <Text>Requesting for camera permission</Text>;
+  }
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>;
+  }
+
+  return (
+    <View
+      style={{
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+      }}>
+      <BarCodeScanner
+        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        style={[StyleSheet.absoluteFillObject, styles.container]}>
+        <Text style={styles.description}>Scan QR Code</Text>
+
+        <Ionicons name="ios-qr-scanner" size={350} color="white" />
+ 
+        <Text onPress={() => alert("Navigate back from here")} style={styles.cancel}>
+          Cancel
+            </Text>
+
+      </BarCodeScanner>
+
+
+        {scanned && (
+          <Button title="Tap to Scan Again" color="orange" onPress={() => setScanned(false)} />
+        )}
+
+
+    </View>
+  );
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
 
-export default ManualUpdateScreen
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: '#ecf0f1',
+    padding: 8,
+  },
+
+  description: {
+    fontSize: width * 0.1,
+    fontFamily: "Nunito-Bold",
+    fontWeight: "bold",
+    marginTop: '10%',
+    textAlign: 'center',
+    width: '70%',
+    color: 'white',
+  },
+  cancel: {
+    fontSize: width * 0.07,
+    textAlign: 'center',
+    fontFamily: "Nunito-Regular",
+    width: '70%',
+    color: 'white',
+  },
+});

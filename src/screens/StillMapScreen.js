@@ -1,6 +1,7 @@
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
+import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button ,FlatList } from 'react-native';
+import { connect } from 'react-redux';
 
 
 
@@ -18,6 +19,9 @@ class StillMapScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+
+      loading: false,
+
       currentX: 100,
       currentY: 300,
 
@@ -30,18 +34,35 @@ class StillMapScreen extends React.Component {
       currentZoom: 1,
       iconZoomedSize: 33,
 
+      data: [],
     }
   }
 
+  // componentDidMount() {
+  //   fetch('http://192.168.31.43:3000/stores')
+  //     .then(results => results.json())
+  //     .then(data => {
+  //       this.setState({
+  //         data: data.data
+  //       })
+  //     });
+  // }
+
+  componentWillMount(){
+    this.fetchData();
+  }
+
+ fetchData = async () =>{
+   const res = await fetch('http://192.168.31.43:3000/stores');
+   const json=await res.json();
+   this.setState({data: json.data});
+ }
+
+
+
+
   logOutZoomState = (event, gestureState, zoomableViewEventObject) => {
-    // console.log('');
-    // console.log('');
-    // console.log('-------------');
-    // console.log('Event: ', event);
-    // console.log('GestureState: ', gestureState);
-    // console.log('ZoomableEventObject: ', zoomableViewEventObject);
-    // console.log('');
-    // console.log(`Zoomed from ${zoomableViewEventObject.lastZoomLevel} to  ${zoomableViewEventObject.zoomLevel}`);
+
     this.setState({ currentZoom: zoomableViewEventObject.zoomLevel });
   }
 
@@ -57,10 +78,23 @@ class StillMapScreen extends React.Component {
 
 
   render() {
+    if (this.state.loading) {
+      return (<View><Text>Data Loading</Text></View>)
+    }
+    else
+      console.log("first store is :", this.state.data[0]);
+      // console.log(this.state.data.data[2]);
+    //   var storeData = this.state.data;
+    // console.log(storeData);
 
-    const { currentZoom } = this.state
+
+
+
+
+    console.log(this.state.currentZoom);
+    const { currentZoom } = this.state;
     const zoomedIconSize = Math.round(33 / currentZoom);
-    console.log(zoomedIconSize);
+    // console.log(zoomedIconSize);
     // this.setState({ iconZoomedSize: 33 / this.state.currentZoom });
     // console.log('icon size', this.state.iconZoomedSize);
 
@@ -68,7 +102,7 @@ class StillMapScreen extends React.Component {
 
 
 
-    /////////////////////////// Style /////////
+    /////////////////////////// coordinate compensate /////////
     // let testX= (this.state.destX/this.state.width*100*1.5).toFixed(2)+"%";
     // let testX= Math.round(this.state.destX/this.state.width*10000/1.5)/100;
     // let testX= Math.round(this.state.destX*this.state.width/1321);
@@ -132,7 +166,7 @@ class StillMapScreen extends React.Component {
         zIndex: 10,
 
 
-   
+
       },
 
       destMaker: {
@@ -149,7 +183,7 @@ class StillMapScreen extends React.Component {
         zIndex: 20,
 
 
-        borderColor:"white",
+        borderColor: "white",
       },
 
       testInfo: {
@@ -169,11 +203,11 @@ class StillMapScreen extends React.Component {
         position: "absolute",
         top: "5%",
         right: "5%",
-        elevation:5,
+        elevation: 5,
         backgroundColor: "white",
-        borderRadius:30,
-        paddingLeft:4,
-        paddingRight:4,
+        borderRadius: 30,
+        paddingLeft: 4,
+        paddingRight: 4,
       },
 
       buttonContainer: {
@@ -181,7 +215,7 @@ class StillMapScreen extends React.Component {
         top: "80%",
         left: "50%",
         zIndex: 10,
-    
+
       },
       bubble: {
         flex: 1,
@@ -191,17 +225,17 @@ class StillMapScreen extends React.Component {
         borderRadius: 20,
         marginRight: 20,
         elevation: 5,
-        zIndex:4,
+        zIndex: 4,
       },
-    
-    
+
+
       map: {
         // flex:1,
         height: "100%",
         zIndex: -1,
       },
 
-  
+
       scanText: {
         flex: 1,
         color: "white",
@@ -251,9 +285,9 @@ class StillMapScreen extends React.Component {
             // resizeMode="stretch"
             />
           </ReactNativeZoomableView>
-  
 
-            <Ionicons name="ios-compass" size={50} color="red" style={styles.compass} />
+
+          <Ionicons name="ios-compass" size={50} color="red" style={styles.compass} />
 
 
         </View>
@@ -261,10 +295,10 @@ class StillMapScreen extends React.Component {
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.bubble}
-            onPress={() =>this.props.navigation.navigate("ManualUpdate")}
+            onPress={() => this.props.navigation.navigate("ManualUpdate")}
           >
             <Text style={styles.scanText}>
-             [ + ] Update Location
+              [ + ] Update Location
             </Text>
           </TouchableOpacity>
         </View>
@@ -277,9 +311,11 @@ class StillMapScreen extends React.Component {
         <Text style={styles.testInfo}>DestX:{this.state.destX}</Text>
         <Text>view width: {this.state.width}</Text>
         <Text>view height: {this.state.height}</Text>
+        {/* <Text>{this.state.data.data[2].name}</Text> */}
         {/* <Text>TestX: {testX}</Text>
         <Text>TestY: {testY}</Text> */}
         {/* <Text>Percent from Top {PctVHfromTop}</Text> */}
+
 
 
 

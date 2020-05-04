@@ -18,10 +18,19 @@ import Modal from 'react-native-modal';
 
 import { Ionicons } from '@expo/vector-icons';
 
+import { redLinePoints, greenLinePoints, brownLinePoints, blueLinePoints, orangeLinePoints, darkblueLinePoints } from '../context/mapLines';
+let mapStyle = require('../context/mapStyle.json');
+
+
+
+
 class MapScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+
+      loading: true,
+
       region: {
         latitude: 29.756295,
         longitude: -95.362869,
@@ -29,134 +38,185 @@ class MapScreen extends React.Component {
         longitudeDelta: 0.0121,
       },
 
-      markers: [{
-        key: 1,
-        title: 'Hello Start',
-        coordinates: {
-          latitude: 29.75695,
-          longitude: -95.365869
-        },
+      currentLocationObj: {
+
       },
-      {
-        key: 2,
-        title: 'end',
-        coordinates: {
-          latitude: 29.756290,
-          longitude: -95.362874
-        },
-      }
-      ],
+
+      destObj: {},
 
       isModalVisible: false,
 
+      data: {},
+
+
     }
   }
+
+
+
+
+  componentWillMount() {
+ 
+  }
+
+
 
 
   toggleModal = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   };
 
+
+
+
   render() {
 
-    // const [err, setErr] = useState(null);
+    if (this.state.loading) {
+      return (<View><Text>Data Loading</Text></View>)
+    }
+    else
+      // console.log(this.state.data);
 
-    const startWatching = async () => {
-      try {
-        await requestPermissionsAsync();
-        await watchPositionAsync({
-          accuracy: Accuracy.BestForNavigation,
-          timeInterval: 1000,
-          distanceInterval: 10
-        }, (location) => {
-          console.log(location);
+      // const [err, setErr] = useState(null);
 
-        })
-      } catch (e) {
-        setErr(e);
-      }
+      // const startWatching = async () => {
+      //   try {
+      //     await requestPermissionsAsync();
+      //     await watchPositionAsync({
+      //       accuracy: Accuracy.BestForNavigation,
+      //       timeInterval: 1000,
+      //       distanceInterval: 10
+      //     }, (location) => {
+      //       console.log(location);
 
+      //     })
+      //   } catch (e) {
+      //     setErr(e);
+      //   }
+      // }
+
+      // useEffect(() => {
+      //   startWatching();
+      // }, []
+      // );
+
+
+
+      ////////////////////////////////
+
+
+
+      /////////////////
+      // console.log("+++++++++++++++++++++++++++++++", this.state.data[0].latitude)
+
+
+      // const updatedLocationObj = this.state.data[0];
+
+
+      console.log("currentMarker=========================", this.state.currentLocationObj);
+    console.log(this.state.currentLocationObj.latitude);
+    // console.log(this.state.scanText);
+
+
+
+
+    pointsToCoordArry = points => {
+      let coordObj = {}
+      let coordArray = []
+
+      points.map(point => {
+        coordObj = { latitude: point[1], longitude: point[0] }
+        coordArray.push(coordObj)
+      })
+      // console.log(coordArray);
+
+      return coordArray;
     }
 
-
-
-
-
-    // useEffect(() => {
-    //   startWatching();
-    // }, []
-    // );
-
-
-
-    let points = [];
-    for (let i = 0; i < 20; i++) {
-      if (i % 2 === 0) {
-        points.push({
-          latitude: 29.756295 + i * 0.00001,
-          longitude: -95.362869 + i * 0.0001
-        });
-      } else {
-        points.push({
-
-          latitude: 29.756295 - i * 0.00001,
-          longitude: -95.362869 + i * 0.0001
-        });
-      }
-
-    }
-
-
+    pointsToCoordArry(redLinePoints);
 
     return (
 
       <View>
-        {/* 
-        <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-          <Text>This is Map Page</Text>
-        </View> */}
+
         <View>
 
         </View>
 
-
-
         <View>
-
-
-
 
           <MapView style={styles.map}
 
+            customMapStyle={mapStyle}
 
             initialRegion={{
-              latitude: 29.756295,
-              longitude: -95.362869,
-              latitudeDelta: 0.00412,
-              longitudeDelta: 0.0121,
+              latitude: 29.758611,
+              longitude: -95.366792,
+              latitudeDelta: 0.003812,
+              longitudeDelta: 0.00521,
+
             }}
 
             showsUserLocation={true}
             showsIndoors={true}
             showsIndoorLevelPicker={true}
-            cacheEnabled={true}
+            // cacheEnabled={true}
+            toolbarEnabled={true}
+          // animateCamera 
 
           >
 
-            <Polyline coordinates={points}
-              strokeColo={"orange"}
-              strokeWidth={5}
 
+            <Polyline coordinates={pointsToCoordArry(redLinePoints)}
+              strokeColor={"red"}
+              strokeWidth={5}
             />
 
-            {this.state.markers.map(marker => (
-              <MapView.Marker
-                key={marker.key}
-                // style={slected cate}
-                coordinate={marker.coordinates}
-                title={marker.title}
-              />
-            ))}
+            <Polyline coordinates={pointsToCoordArry(greenLinePoints)}
+              strokeColor={"green"}
+              strokeWidth={5}
+            />
+
+            <Polyline coordinates={pointsToCoordArry(brownLinePoints)}
+              strokeColor={"darkorange"}
+              strokeWidth={5}
+            />
+
+            <Polyline coordinates={pointsToCoordArry(blueLinePoints)}
+              strokeColor={"blue"}
+              strokeWidth={5}
+            />
+
+            <Polyline coordinates={pointsToCoordArry(orangeLinePoints)}
+              strokeColor={"orange"}
+              strokeWidth={5}
+            />
+
+            <Polyline coordinates={pointsToCoordArry(darkblueLinePoints)}
+              strokeColor={"darkblue"}
+              strokeWidth={5}
+            />
+
+
+            {/* <MapView.Marker
+
+
+            /> */}
+
+            <Marker await
+
+              key={this.state.currentLocationObj._id}
+              coordinate={{
+                latitude: this.state.data[2].latitude,
+                longitude: this.state.data[2].longitude
+                // latitude: 29.7544285,
+                // longitude: -95.3748376
+              }}
+
+
+              title={this.state.currentLocationObj.name}
+
+            />
 
           </MapView>
           {/* {err ? <Text> Please enable location services </Text>: null} */}
@@ -173,11 +233,11 @@ class MapScreen extends React.Component {
           </TouchableOpacity>
 
           <Modal isVisible={this.state.isModalVisible}>
-          
+
             <View style={{ flex: 1 }}>
               <Text>Hello!</Text>
               <TouchableOpacity style={styles.modalButton} onPress={this.toggleModal}>
-              <Text style={styles.scanText}> Search </Text>
+                <Text style={styles.scanText}> Search </Text>
 
               </TouchableOpacity>
             </View>
@@ -224,7 +284,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: "5%",
     right: 0,
-    
+
   },
 
   bubble1: {

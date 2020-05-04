@@ -68,7 +68,7 @@ const switchNavigator = createSwitchNavigator({
 const App = createAppContainer(switchNavigator);
 
 const store = createStore(combineReducer, applyMiddleware(thunk));
-console.log(loadAllData([]))
+// console.log(loadAllData([]))
 store.dispatch(loadData());
 
 

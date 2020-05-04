@@ -1,1 +1,2 @@
 export const LOAD_DATA = "LOAD_DATA";
+export const UPDATE_LOCATION="UPDATE_LOCATION";

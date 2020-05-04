@@ -1,4 +1,4 @@
-import {LOAD_DATA} from '../actions/types';
+import {LOAD_DATA, UPDATE_LOCATION} from '../actions/types';
 
 
 let locationReducer = (state, action) => {
@@ -6,6 +6,7 @@ let locationReducer = (state, action) => {
     if (state === undefined) {
         state = {
             data: [],
+            newCoord: "it was hello",
         }
     }
     console.log(action.type)
@@ -19,6 +20,18 @@ let locationReducer = (state, action) => {
             }
             // console.log(newState)
             return newState
+
+
+            case UPDATE_LOCATION:
+                console.log("in reducer UPDATE_LOCATION payload", action.payload)
+                return{
+                    ...state,
+                    newCoord: action.payload
+                }
+
+
+            // case LOCATION_RECORDS:
+
 
 
         // // case ADD_COUNTRY:

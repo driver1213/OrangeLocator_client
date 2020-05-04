@@ -2,6 +2,9 @@ import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+//redux stuff
+import {connect} from 'react-redux'
+import {updateLocation} from '../actions/locationActions'
 
 // import { MonoText } from '../components/StyledText';
 
@@ -48,16 +51,20 @@ class MapScreen extends React.Component {
 
       data: {},
 
+      updatedCoord:"",
+
 
     }
   }
 
-
-
-
-  componentWillMount() {
- 
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (this.shouldUpdate(nextProps)) {
+  //     this.setState(() => ({
+  //       tracksViewChanges: true,
+  //     }));
+  //   }
+  // }
+  // shouldUpdate = (nextProps) => { //TODO implement 
 
 
 
@@ -71,10 +78,14 @@ class MapScreen extends React.Component {
 
   render() {
 
-    if (this.state.loading) {
-      return (<View><Text>Data Loading</Text></View>)
-    }
-    else
+    
+    // if (this.state.loading) {
+    //   return (<View><Text>Data Loading</Text></View>)
+    // }
+    // else
+
+
+
       // console.log(this.state.data);
 
       // const [err, setErr] = useState(null);
@@ -113,14 +124,17 @@ class MapScreen extends React.Component {
       // const updatedLocationObj = this.state.data[0];
 
 
-      console.log("currentMarker=========================", this.state.currentLocationObj);
-    console.log(this.state.currentLocationObj.latitude);
+    // console.log("currentMarker=========================", this.state.currentLocationObj);
+    // console.log(this.state.currentLocationObj.latitude);
     // console.log(this.state.scanText);
 
+    console.log("the  newcoord from prop is :---------------------------",this.props.newCoord);
+    console.log("the coord from state is :---------------------------",this.state.updatedCoord);
+    const NewLat= parseFloat(this.props.newCoord);
 
 
 
-    pointsToCoordArry = points => {
+    let pointsToCoordArray = points => {
       let coordObj = {}
       let coordArray = []
 
@@ -133,7 +147,6 @@ class MapScreen extends React.Component {
       return coordArray;
     }
 
-    pointsToCoordArry(redLinePoints);
 
     return (
 
@@ -167,32 +180,32 @@ class MapScreen extends React.Component {
           >
 
 
-            <Polyline coordinates={pointsToCoordArry(redLinePoints)}
+            <Polyline coordinates={pointsToCoordArray(redLinePoints)}
               strokeColor={"red"}
               strokeWidth={5}
             />
 
-            <Polyline coordinates={pointsToCoordArry(greenLinePoints)}
+            <Polyline coordinates={pointsToCoordArray(greenLinePoints)}
               strokeColor={"green"}
               strokeWidth={5}
             />
 
-            <Polyline coordinates={pointsToCoordArry(brownLinePoints)}
+            <Polyline coordinates={pointsToCoordArray(brownLinePoints)}
               strokeColor={"darkorange"}
               strokeWidth={5}
             />
 
-            <Polyline coordinates={pointsToCoordArry(blueLinePoints)}
+            <Polyline coordinates={pointsToCoordArray(blueLinePoints)}
               strokeColor={"blue"}
               strokeWidth={5}
             />
 
-            <Polyline coordinates={pointsToCoordArry(orangeLinePoints)}
+            <Polyline coordinates={pointsToCoordArray(orangeLinePoints)}
               strokeColor={"orange"}
               strokeWidth={5}
             />
 
-            <Polyline coordinates={pointsToCoordArry(darkblueLinePoints)}
+            <Polyline coordinates={pointsToCoordArray(darkblueLinePoints)}
               strokeColor={"darkblue"}
               strokeWidth={5}
             />
@@ -203,14 +216,18 @@ class MapScreen extends React.Component {
 
             /> */}
 
-            <Marker await
+            <Marker
 
               key={this.state.currentLocationObj._id}
+
+              // key={ `${marker.id}${Date.now()}` } //update itself
+
               coordinate={{
-                latitude: this.state.data[2].latitude,
-                longitude: this.state.data[2].longitude
+                // latitude: this.props.data[2].latitude,
+                // longitude: this.props.data[2].longitude
+                latitude: NewLat,
                 // latitude: 29.7544285,
-                // longitude: -95.3748376
+                longitude: -95.3748376
               }}
 
 
@@ -342,5 +359,20 @@ const styles = StyleSheet.create({
 
 });
 
+const mapStateToProp = (state) => {
+  return {
+    data: state.locationReducer.data,
+    newCoord: state.locationReducer.newCoord
+    
+  }
+}
 
-export default MapScreen
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateLocation: (newCoord) => dispatch(updateLocation(newCoord))
+  }
+}
+export default connect(mapStateToProp, mapDispatchToProps)(MapScreen)
+
+
+{/* <MapScreen data=globalStateData updateLoacation={anonFunc} */}

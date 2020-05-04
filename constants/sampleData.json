@@ -1,0 +1,73 @@
+{
+    "message": "Found the stores",
+    "data": [
+    {
+    "_id": "5ea9cf9b72593a331a1f41b5",
+    "name": "La Dolce Vita Cafe",
+    "info": {
+    "phone": "(713) 652-3197",
+    "address": "1600 Smith St, Tunnel Level, Houston, TX 77002"
+    },
+    "macAddress": "",
+    "imgUrl": "",
+    "category": "Food",
+    "latitude": 29.755057,
+    "longitude": -95.37267,
+    "locations": []
+    },
+    {
+    "_id": "5eab250d3bd7830fb82fe8fb",
+    "name": "Wells Fargo Plaza",
+    "info": {
+    "phone": "(713) 654-2100",
+    "address": "1000 Louisiana St, Houston, TX 77002"
+    },
+    "wifiMacAddress": "0.0.0.0",
+    "imgUrl": "",
+    "category": "Bank",
+    "longitude": 29.7582497,
+    "latitude": -95.3681076,
+    "locations": []
+    },
+    {
+    "_id": "5eabb04b00b1fa158dde2f48",
+    "name": "Executive Eye Care",
+    "info": {
+    "phone": "(713) 225-2600",
+    "address": "910 Louisiana St m175, Houston, TX 77002"
+    },
+    "imgUrl": "",
+    "category": "Optometry",
+    "latitude": 29.7591306,
+    "longitude": -95.3677873,
+    "locations": []
+    },
+    {
+    "_id": "5eabb53700b1fa158dde2f4b",
+    "name": "District 7 Grill",
+    "info": {
+    "phone": "(713) 654-1300",
+    "address": "1001 Louisiana St, Houston, TX 77002"
+    },
+    "imgUrl": "",
+    "category": "Food",
+    "latitude": 29.7579896,
+    "longitude": -95.367489,
+    "locations": []
+    },
+    {
+    "_id": "5eabb63ab09e97a70835bef1",
+    "name": "Murphy's Deli",
+    "info": {
+    "phone": "(713) 229-8124",
+    "address": "910 Louisiana St, Houston, TX 77002"
+    },
+    "macAddress": "",
+    "imgUrl": "",
+    "category": "Food",
+    "latitude": 29.759058,
+    "longitude": -95.367567,
+    "locations": []
+    }
+    ]
+    }

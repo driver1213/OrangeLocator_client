@@ -22,6 +22,8 @@ import { redLinePoints, greenLinePoints, brownLinePoints, blueLinePoints, orange
 let mapStyle = require('../context/mapStyle.json');
 
 
+
+
 class MapScreen extends React.Component {
   constructor(props) {
     super(props)
@@ -46,19 +48,15 @@ class MapScreen extends React.Component {
 
       data: {},
 
+
     }
   }
 
 
+
+
   componentWillMount() {
-    fetch('http://192.168.31.43:3000/stores')
-      .then(results => results.json())
-      .then(data => {
-        this.setState({
-          data: data.data,
-          loading: false
-        })
-      });
+ 
   }
 
 
@@ -109,14 +107,15 @@ class MapScreen extends React.Component {
 
 
       /////////////////
-      console.log("+++++++++++++++++++++++++++++++", this.state.data[0].latitude)
+      // console.log("+++++++++++++++++++++++++++++++", this.state.data[0].latitude)
 
 
-    // const updatedLocationObj = this.state.data[0];
- 
+      // const updatedLocationObj = this.state.data[0];
 
-    console.log("currentMarker=========================", this.state.currentLocationObj);
+
+      console.log("currentMarker=========================", this.state.currentLocationObj);
     console.log(this.state.currentLocationObj.latitude);
+    // console.log(this.state.scanText);
 
 
 

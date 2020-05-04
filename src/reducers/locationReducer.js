@@ -6,7 +6,7 @@ let locationReducer = (state, action) => {
     if (state === undefined) {
         state = {
             data: [],
-            newCoord: "it was hello",
+            newCoord: 29.7544285,
         }
     }
     console.log(action.type)

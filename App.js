@@ -16,35 +16,93 @@ import DigitalCodeScreen from './src/screens/DigitalCodeScreen';
 import ResolveAuthScreen from './src/screens/ResolveAuthScreen'
 import AccountScreen from './src/screens/AccountScreen';
 import StillMapScreen from './src/screens/StillMapScreen';
+import * as Font from 'expo-font';
+import { useFonts } from '@use-expo/font';
+import { AppLoading } from 'expo';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk'
+import combineReducer from './src/reducers/combineReducer';
+import {loadData, loadAllData} from './src/actions/locationActions'
+
+// await loadAsync({
+//   // Load a font `Montserrat` from a static resource
+//   "Nunito-Bold": require('./assets/fonts/Nunito-Bold.ttf'),
+//   "Nunito-Regular": require('./assets/fonts/Nunito-Bold.ttf')
+
+// });
+
+// //Use the font with the fontFamily property
+
+// return <Text style={{ fontFamily: 'Montserrat' }} />;
+
 
 const switchNavigator = createSwitchNavigator({
+
   mainFlow: createBottomTabNavigator({
     screenFlow: createStackNavigator({
-      ChooseSite: ChooseSiteScreen,
+      // ChooseSite: ChooseSiteScreen,
       SavedList: SavedListScreen,
       ViewDetail: ViewDetailScreen,
       SearchResults: SearchResultsScreen,
+      Map: MapScreen,
       ManualUpdate: ManualUpdateScreen,
-      DigitalCode: DigitalCodeScreen,
     }),
-    
+
     Map: MapScreen,
-    StillMap:StillMapScreen,
-    
+    ManualUpdate: ManualUpdateScreen,
+
     loginFlow: createStackNavigator({
-    Signup: SignupScreen,
-    Signin: SigninScreen
-  }),
-  Account: AccountScreen
+      Signup: SignupScreen,
+      Signin: SigninScreen
+    }),
+    Account: AccountScreen
   }),
 });
 
+
+
+
+
+
 const App = createAppContainer(switchNavigator);
 
+const store = createStore(combineReducer, applyMiddleware(thunk));
+console.log(loadAllData([]))
+store.dispatch(loadData());
+
+
+
+
+
+
+
+
+
 export default () => {
-  return (
-    <AuthProvider>
-      <App ref={(navigator) => { setNavigator(navigator) }} />
-    </AuthProvider>
-  )
+
+
+
+  let [fontsLoaded] = useFonts({
+    "Nunito-Bold": require('./assets/fonts/Nunito-Bold.ttf'),
+    "Nunito-Regular": require('./assets/fonts/Nunito-Bold.ttf')
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  } else
+    return (
+      <Provider store={store}>
+        <AuthProvider>
+          <App ref={(navigator) => { setNavigator(navigator) }} />
+        </AuthProvider>
+      </Provider>
+    )
+
+
+
+
+
+
+
 }

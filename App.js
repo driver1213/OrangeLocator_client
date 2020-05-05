@@ -23,8 +23,10 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk'
 import combineReducer from './src/reducers/combineReducer';
+import { SimpleLineIcons } from '@expo/vector-icons'
 import {loadData, loadAllData} from './src/actions/locationActions';
 import PropTypes from 'prop-types';
+
 
 
 // await loadAsync({
@@ -38,10 +40,19 @@ import PropTypes from 'prop-types';
 
 // return <Text style={{ fontFamily: 'Montserrat' }} />;
 
+const login = createStackNavigator({
+  Signup: SignupScreen,
+  Signin: SigninScreen
+})
+
+login.navigationOptions = {
+  tabBarIcon: <SimpleLineIcons name="login" size={20} />
+}
 
 const switchNavigator = createSwitchNavigator({
 
   mainFlow: createBottomTabNavigator({
+    login,
     screenFlow: createStackNavigator({
       // ChooseSite: ChooseSiteScreen,
       SavedList: SavedListScreen,
@@ -52,12 +63,7 @@ const switchNavigator = createSwitchNavigator({
     }),
 
     Map: MapScreen,
-    ManualUpdate: ManualUpdateScreen,
-
-    loginFlow: createStackNavigator({
-      Signup: SignupScreen,
-      Signin: SigninScreen
-    }),
+    // ManualUpdate: ManualUpdateScreen,
     Account: AccountScreen
   }),
 });

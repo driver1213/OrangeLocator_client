@@ -24,7 +24,7 @@ const tryLocalSignin = dispatch => async () => {
     const token = await AsyncStorage.getItem('token')
     if (token){
         dispatch({ type: 'signin', payload: token })
-        navigate('ChooseSite')
+        navigate('Map')
     } else{
         navigate('Signup')
     }
@@ -40,7 +40,7 @@ const signup = (dispatch) => async ({ email, password }) =>{
             await AsyncStorage.setItem('token', response.data.token);
             dispatch({ type: 'signin', payload: response.data.token})
 
-            navigate('ChooseSite')
+            navigate('Map')
         }
         catch (err){
             dispatch({ 
@@ -57,7 +57,7 @@ const signin = (dispatch) => async ({ email, password }) =>{
             const response = await axios.post('/signin', { email, password })
             await AsyncStorage.setItem('token', response.data.token)
             dispatch({ type: 'signin', payload: response.data.token})
-            navigate('ChooseSite')
+            navigate('Map')
         }
         catch (err){
             dispatch({

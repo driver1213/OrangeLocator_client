@@ -24,7 +24,7 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk'
 import combineReducer from './src/reducers/combineReducer';
 import { SimpleLineIcons } from '@expo/vector-icons'
-import {loadData, loadAllData} from './src/actions/locationActions';
+import { loadData, loadAllData } from './src/actions/locationActions';
 
 
 
@@ -48,27 +48,51 @@ Login.navigationOptions = {
   tabBarIcon: <SimpleLineIcons name="login" size={20} />
 }
 
+
 const switchNavigator = createSwitchNavigator({
 
   mainFlow: createBottomTabNavigator({
     Login,
-    screenFlow: createStackNavigator({
-      // ChooseSite: ChooseSiteScreen,
-      SavedList: SavedListScreen,
-      ViewDetail: ViewDetailScreen,
-      Map: MapScreen,
-      ManualUpdate: ManualUpdateScreen,
-      SearchResults: SearchResultsScreen,
-    }),
-    
-    SearchResults: SearchResultsScreen,
+    // screenFlow: createStackNavigator({
+    //   // ChooseSite: ChooseSiteScreen,
+    //   // ViewDetail: ViewDetailScreen,
+    //   Map: MapScreen,
+    //   Mate: ManualUpdateScreen,
+    //   SearchResults: SearchResultsScreen,
+    // }),
+
+    Scan: ManualUpdateScreen,
+    FavList: SavedListScreen,
     Map: MapScreen,
-    // ManualUpdate: ManualUpdateScreen,
+    Search: SearchResultsScreen,
+
     Account: AccountScreen
+
   }),
+
+
+
+  // mainFlow: createBottomTabNavigator({
+  //   Account: AccountScreen,
+  //   Login,
+
+  //   Map: MapScreen,
+  //   ManualUpdate: ManualUpdateScreen,
+  //   FavList: SavedListScreen,
+  //   SearchResults: SearchResultsScreen,
+
+
+  // }),
+
+
+
+
+
 });
 
-
+// Map.navigationOptions = {
+//   tabBarIcon: <Feather name="map" size={20} />
+// }
 
 
 

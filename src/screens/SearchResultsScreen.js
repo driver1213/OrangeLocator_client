@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { View, Text, FlatList, ActivityIndicator, Alert } from 'react-native';
 import { ListItem, SearchBar } from 'react-native-elements';
 import { connect } from 'react-redux';
-import { selectDest } from '../actions/locationActions';
+import { selectDest, addFav } from '../actions/locationActions';
 import PropTypes from 'prop-types';
+import { Feather} from '@expo/vector-icons';
+
 
 
 class SearchStoreResults extends Component {
@@ -86,7 +88,10 @@ class SearchStoreResults extends Component {
                 'New Destination',
                 `Are you sure want to set "${item.name}" as new destination?`,
                 [
-                  { text: 'Set as "My Favivrate"', onPress: () => console.log('Ask me later pressed') },
+                  { text: 'Set as "My Favorite"', onPress: () => {
+                    this.props.addFav(item);
+                    alert(`${item.name} has saved in your Fav List`);
+                    console.log('Fav Saved')} },
                   {
                     text: 'Cancel',
                     onPress: () => console.log('Cancel Pressed'),
@@ -121,10 +126,17 @@ class SearchStoreResults extends Component {
   }
 }
 
+SearchStoreResults.navigationOptions = {
+  tabBarIcon: <Feather  name="search" size={20} />,
+  tabBarLabel: "Search Stores in Tunnel",
+  headerShown: true
+  }
+
 
 SearchStoreResults.propTypes = {
   selectDest: PropTypes.func.isRequired,
-  destInfo: PropTypes.object.isRequired
+  addFav: PropTypes.func.isRequired,
+  destInfo: PropTypes.object.isRequired,
 
 };
 
@@ -133,6 +145,7 @@ const mapStateToProp = (state) => {
   return {
     data: state.locationReducer.data,
     destInfo: state.locationReducer.destInfo,
+  
   }
 }
 
@@ -144,4 +157,4 @@ const mapStateToProp = (state) => {
 //   // }
 // })
 
-export default connect(mapStateToProp, { selectDest })(SearchStoreResults)
+export default connect(mapStateToProp, { selectDest,addFav })(SearchStoreResults)

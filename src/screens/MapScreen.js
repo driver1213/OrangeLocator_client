@@ -140,8 +140,8 @@ class MapScreen extends React.Component {
             customMapStyle={mapStyle}
 
             initialRegion={{
-              latitude: 29.758611,
-              longitude: -95.366792,
+              latitude:  parsedCoord[0],
+              longitude:  parsedCoord[1],
               latitudeDelta: 0.003812,
               longitudeDelta: 0.00521,
 
@@ -201,10 +201,13 @@ class MapScreen extends React.Component {
 
                 }
               }
+              // img={{ uri: '../../assets/images/orange_logo_map_marker.png'}}
+
+
             >
-              <Callout
-                description={"What is it"}
-             / >
+
+            <Image source={require('../../assets/images/rsz_1orange_logo_map_marker.png')} ></Image>
+            
             </Marker>
 
             <Marker

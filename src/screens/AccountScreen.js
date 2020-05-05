@@ -4,6 +4,8 @@ import { Button } from 'react-native-elements'
 import { SafeAreaView } from 'react-navigation'
 import Spacer from '../components/Spacer'
 import { Context as AuthContext } from '../context/AuthContext'
+import { EvilIcons } from '@expo/vector-icons';
+
 
 const AccountScreen = () => {
     const { signout } = useContext(AuthContext)
@@ -23,4 +25,10 @@ const styles = StyleSheet.create({
     },
 
 })
+
+AccountScreen.navigationOptions = {
+    tabBarIcon: <EvilIcons name="gear" size={20} />
+    }
+
+
 export default AccountScreen

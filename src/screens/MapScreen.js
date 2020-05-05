@@ -19,7 +19,7 @@ import { createStackNavigator, createAppContainer } from 'react-navigation';
 import Modal from 'react-native-modal';
 
 
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, Feather } from '@expo/vector-icons';
 
 import { redLinePoints, greenLinePoints, brownLinePoints, blueLinePoints, orangeLinePoints, darkblueLinePoints } from '../context/mapLines';
 let mapStyle = require('../context/mapStyle.json');
@@ -358,6 +358,10 @@ const styles = StyleSheet.create({
   }
 
 });
+
+MapScreen.navigationOptions = {
+  tabBarIcon: <Feather name="map" size={20} />
+}
 
 const mapStateToProp = (state) => {
   return {

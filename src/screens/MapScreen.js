@@ -17,10 +17,7 @@ import { requestPermissionsAsync, watchPositionAsync, Accuracy } from 'expo-loca
 import '../components/_mockLocations';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import Modal from 'react-native-modal';
-
-
-import { Ionicons, FontAwesome } from '@expo/vector-icons';
-
+import { Ionicons, FontAwesome, Feather } from '@expo/vector-icons';
 import { redLinePoints, greenLinePoints, brownLinePoints, blueLinePoints, orangeLinePoints, darkblueLinePoints } from '../context/mapLines';
 let mapStyle = require('../context/mapStyle.json');
 
@@ -353,6 +350,10 @@ const styles = StyleSheet.create({
   }
 
 });
+
+MapScreen.navigationOptions = {
+  tabBarIcon: <Feather name="map" size={20} />
+}
 
 const mapStateToProp = (state) => {
   return {

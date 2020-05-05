@@ -18,6 +18,7 @@ class SearchStoreResults extends Component {
     // console.log(this.props.data);
     this.arrayholder = this.props.data
   }
+
   componentDidMount() {
     // this.makeRemoteRequest();
     this.setState({

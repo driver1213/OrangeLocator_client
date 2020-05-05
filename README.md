@@ -20,6 +20,11 @@ When user riches the first  QR code in tunnel, pushes the button "Update Locatio
 Next user can choose the destination from the list by pushing the button "New Destination"<br/>
 ![screenshot](public/list_lock.jpg)<br/>
 
+Than the user can  go to the place, updating the location  by scanning the QR codes.<br/>
+User can also  save favorite locations <br/>
+![scr](public/savt1.jpg) ![scr](public/save2.jpg)
+
+
 
 ## Technologies used
 * React-Native
@@ -33,6 +38,8 @@ Next user can choose the destination from the list by pushing the button "New De
 
 
 ## App Video Demo
+https://youtu.be/YEwupqOfkgs
+
 
 
 ## Authors

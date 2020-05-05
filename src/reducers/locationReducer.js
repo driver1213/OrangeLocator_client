@@ -1,4 +1,4 @@
-import { LOAD_DATA, UPDATE_LOCATION } from '../actions/types';
+import { LOAD_DATA, UPDATE_LOCATION, SELECT_DEST } from '../actions/types';
 
 
 let locationReducer = (state, action) => {
@@ -44,7 +44,7 @@ let locationReducer = (state, action) => {
 
 
         case UPDATE_LOCATION:
-            console.log("in reducer UPDATE_LOCATION payload", action.payload)
+            // console.log("in reducer UPDATE_LOCATION payload", action.payload)
             return {
                 ...state,
                 newCoord: action.payload,
@@ -52,7 +52,13 @@ let locationReducer = (state, action) => {
 
             }
 
+        case SELECT_DEST:
+            console.log("Reducer payload for select NewDest",action.payload)
+            return{
+                ...state,
+                destInfo:action.payload,
 
+            }
         // case LOCATION_RECORDS:
 
 

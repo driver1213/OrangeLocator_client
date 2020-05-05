@@ -96,12 +96,12 @@ class SearchStoreResults extends Component {
                     text: 'OK',
                     onPress: () => {
                       console.log('OK Pressed');
-                      console.log(item.name);
+                      // console.log(item.name);
 
                       this.props.selectDest(item);
-                      console.log(this.props.destInfo);
+                      // console.log(this.props.destInfo);
 
-                      // this.navigate('Map');
+                      this.props.navigation.navigate('Map');
                     }
                   }
                 ],

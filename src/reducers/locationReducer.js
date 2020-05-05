@@ -44,11 +44,14 @@ let locationReducer = (state, action) => {
 
 
         case UPDATE_LOCATION:
-            // console.log("in reducer UPDATE_LOCATION payload", action.payload)
+            console.log("in reducer UPDATE_LOCATION payload", action.payload)
+            let tempLocationLog=[...state.locationLog];
+            tempLocationLog.unshift(action.payload);
+            
             return {
                 ...state,
                 newCoord: action.payload,
-                // locationLog : state.locationLog.unshift(action.payload)
+                locationLog : [...tempLocationLog]
 
             }
 

@@ -1,4 +1,4 @@
-import {LOAD_DATA, UPDATE_LOCATION , SELECT_DEST } from './types';
+import {LOAD_DATA, UPDATE_LOCATION , SELECT_DEST ,ADD_FAV, DEL_FAV } from './types';
 
 
 export const loadAllData = (payload) => ({type: LOAD_DATA, payload});
@@ -21,3 +21,6 @@ export const selectDest = (newDest) => (dispatch)=> {
   dispatch({type: SELECT_DEST, payload: newDest})};
 
 
+  export const addFav = (newFav) => (dispatch)=> {
+    console.log("add fav==============",newFav)
+    dispatch({type: ADD_FAV, payload: newFav})};

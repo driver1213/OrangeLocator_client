@@ -1,5 +1,5 @@
-import {LOAD_DATA, UPDATE_LOCATION , SELECTED_DEST ,ADD_FAV} from './types';
-import data from '../../constants/sampleData.json'
+import {LOAD_DATA, UPDATE_LOCATION , SELECT_DEST } from './types';
+
 
 export const loadAllData = (payload) => ({type: LOAD_DATA, payload});
 
@@ -15,5 +15,9 @@ export const loadData = () => dispatch =>{
 }
 
 export const updateLocation = (payload) => ({type: UPDATE_LOCATION, payload});
+
+export const selectDest = (newDest) => (dispatch)=> {
+  console.log(newDest)
+  dispatch({type: SELECT_DEST, payload: newDest})};
 
 

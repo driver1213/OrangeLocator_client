@@ -104,6 +104,7 @@ class MapScreen extends React.Component {
     // console.log(JSON.stringify(this.props.destInfo));
     // console.log(this.props.destInfo);
     console.log(this.props.locationLog);
+    console.log(this.props.destInfo);
 
 
 

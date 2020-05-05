@@ -2,10 +2,13 @@ import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+//redux stuff
+import { connect } from 'react-redux'
+import { updateLocation } from '../actions/locationActions'
 
 // import { MonoText } from '../components/StyledText';
 
-import MapView, { Polyline, Marker, Callout } from 'react-native-maps';
+import MapView, { Polyline, Marker, Callout, AnimatedRegion } from 'react-native-maps';
 // import React, { useEffect, useState } from 'react';
 // import {safeAreaView} from 'react-navigation';
 // import {Text } from 'react-native-elements';
@@ -14,10 +17,7 @@ import { requestPermissionsAsync, watchPositionAsync, Accuracy } from 'expo-loca
 import '../components/_mockLocations';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import Modal from 'react-native-modal';
-
-
-import { Ionicons } from '@expo/vector-icons';
-
+import { Ionicons, FontAwesome, Feather } from '@expo/vector-icons';
 import { redLinePoints, greenLinePoints, brownLinePoints, blueLinePoints, orangeLinePoints, darkblueLinePoints } from '../context/mapLines';
 let mapStyle = require('../context/mapStyle.json');
 
@@ -27,40 +27,14 @@ let mapStyle = require('../context/mapStyle.json');
 class MapScreen extends React.Component {
   constructor(props) {
     super(props)
+
     this.state = {
 
-      loading: true,
-
-      region: {
-        latitude: 29.756295,
-        longitude: -95.362869,
-        latitudeDelta: 0.00412,
-        longitudeDelta: 0.0121,
-      },
-
-      currentLocationObj: {
-
-      },
-
-      destObj: {},
-
       isModalVisible: false,
-
-      data: {},
-
-
+      // loading: true
     }
+
   }
-
-
-
-
-  componentWillMount() {
- 
-  }
-
-
-
 
   toggleModal = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
@@ -71,56 +45,72 @@ class MapScreen extends React.Component {
 
   render() {
 
-    if (this.state.loading) {
-      return (<View><Text>Data Loading</Text></View>)
-    }
-    else
-      // console.log(this.state.data);
 
-      // const [err, setErr] = useState(null);
-
-      // const startWatching = async () => {
-      //   try {
-      //     await requestPermissionsAsync();
-      //     await watchPositionAsync({
-      //       accuracy: Accuracy.BestForNavigation,
-      //       timeInterval: 1000,
-      //       distanceInterval: 10
-      //     }, (location) => {
-      //       console.log(location);
-
-      //     })
-      //   } catch (e) {
-      //     setErr(e);
-      //   }
-      // }
-
-      // useEffect(() => {
-      //   startWatching();
-      // }, []
-      // );
+    // if (this.props.loading) {
+    //   return (<View><Text>Data Loading</Text></View>)
+    // }
+    // else
 
 
 
-      ////////////////////////////////
+    // console.log(this.props.data);
+
+    // const [err, setErr] = useState(null);
+
+    // const startWatching = async () => {
+    //   try {
+    //     await requestPermissionsAsync();
+    //     await watchPositionAsync({
+    //       accuracy: Accuracy.BestForNavigation,
+    //       timeInterval: 1000,
+    //       distanceInterval: 10
+    //     }, (location) => {
+    //       console.log(location);
+
+    //     })
+    //   } catch (e) {
+    //     setErr(e);
+    //   }
+    // }
+
+    // useEffect(() => {
+    //   startWatching();
+    // }, []
+    // );
 
 
 
-      /////////////////
-      // console.log("+++++++++++++++++++++++++++++++", this.state.data[0].latitude)
-
-
-      // const updatedLocationObj = this.state.data[0];
-
-
-      console.log("currentMarker=========================", this.state.currentLocationObj);
-    console.log(this.state.currentLocationObj.latitude);
-    // console.log(this.state.scanText);
+    ////////////////////////////////
 
 
 
+    /////////////////
+    // console.log("+++++++++++++++++++++++++++++++", this.state.data[0].latitude)
 
-    pointsToCoordArry = points => {
+
+
+    let rawUpdatedCoordArray = this.props.newCoord.split(",");
+    // console.log('raw', rawUpdatedCoordArray);
+
+    let parsedCoord = [parseFloat(rawUpdatedCoordArray[1]), parseFloat(rawUpdatedCoordArray[0])];
+    // console.log('parsed: ', parsedCoord);
+
+    let newLatLngObj = { latitude: parsedCoord[0], longitude: parsedCoord[1] };
+    // console.log(newLatLngObj);
+
+    // let destLatLngObj = { latitude: this.props.destInfo.latitude, longitude: this.props.destInfo.longitude};
+    // console.log(destLatLngObj);
+    // console.log("destInfo-------------------from props")
+    // console.log(JSON.stringify(this.props.destInfo));
+    // console.log(this.props.destInfo);
+    console.log(this.props.locationLog);
+    console.log(this.props.destInfo);
+
+
+
+
+
+    let pointsToCoordArray = points => {
       let coordObj = {}
       let coordArray = []
 
@@ -128,12 +118,10 @@ class MapScreen extends React.Component {
         coordObj = { latitude: point[1], longitude: point[0] }
         coordArray.push(coordObj)
       })
-      // console.log(coordArray);
 
       return coordArray;
     }
 
-    pointsToCoordArry(redLinePoints);
 
     return (
 
@@ -150,73 +138,94 @@ class MapScreen extends React.Component {
             customMapStyle={mapStyle}
 
             initialRegion={{
-              latitude: 29.758611,
-              longitude: -95.366792,
+              latitude:  parsedCoord[0],
+              longitude:  parsedCoord[1],
               latitudeDelta: 0.003812,
               longitudeDelta: 0.00521,
 
             }}
 
-            showsUserLocation={true}
-            showsIndoors={true}
-            showsIndoorLevelPicker={true}
+            // showsUserLocation={true}
+            // showsIndoors={true}
+            // showsIndoorLevelPicker={true}
             // cacheEnabled={true}
-            toolbarEnabled={true}
+ 
+  
           // animateCamera 
 
           >
 
 
-            <Polyline coordinates={pointsToCoordArry(redLinePoints)}
+            <Polyline coordinates={pointsToCoordArray(redLinePoints)}
               strokeColor={"red"}
               strokeWidth={5}
             />
 
-            <Polyline coordinates={pointsToCoordArry(greenLinePoints)}
+            <Polyline coordinates={pointsToCoordArray(greenLinePoints)}
               strokeColor={"green"}
               strokeWidth={5}
             />
 
-            <Polyline coordinates={pointsToCoordArry(brownLinePoints)}
+            <Polyline coordinates={pointsToCoordArray(brownLinePoints)}
               strokeColor={"darkorange"}
               strokeWidth={5}
             />
 
-            <Polyline coordinates={pointsToCoordArry(blueLinePoints)}
+            <Polyline coordinates={pointsToCoordArray(blueLinePoints)}
               strokeColor={"blue"}
               strokeWidth={5}
             />
 
-            <Polyline coordinates={pointsToCoordArry(orangeLinePoints)}
+            <Polyline coordinates={pointsToCoordArray(orangeLinePoints)}
               strokeColor={"orange"}
               strokeWidth={5}
             />
 
-            <Polyline coordinates={pointsToCoordArry(darkblueLinePoints)}
+            <Polyline coordinates={pointsToCoordArray(darkblueLinePoints)}
               strokeColor={"darkblue"}
               strokeWidth={5}
             />
 
 
-            {/* <MapView.Marker
+            <Marker
+              key={2}
+              title={this.props.destInfo.name}
+              coordinate={
+                {
+                  latitude: this.props.destInfo.latitude,
+                  longitude: this.props.destInfo.longitude
+                  // latitude: 29.7544285,
+                  // longitude: -95.3748376
+
+                }
+              }
+              // img={{ uri: '../../assets/images/orange_logo_map_marker.png'}}
 
 
-            /> */}
+            >
 
-            <Marker await
+            <Image source={require('../../assets/images/rsz_1orange_logo_map_marker.png')} ></Image>
+            
+            </Marker>
 
-              key={this.state.currentLocationObj._id}
-              coordinate={{
-                latitude: this.state.data[2].latitude,
-                longitude: this.state.data[2].longitude
-                // latitude: 29.7544285,
-                // longitude: -95.3748376
-              }}
+            <Marker
 
+              key={1}
+              pinColor={"navy"}
+              coordinate={
+                newLatLngObj
+                // {
+                //   latitude: 29.7544285,
+                //   longitude: -95.3748376
+                // }
+              }
+              title={"Your Last Location"}
 
-              title={this.state.currentLocationObj.name}
+            >
+              {/* <Ionicons name={"ios-walk"} size={50} color={"navy"} /> */}
+              {/* <FontAwesome name={"wheelchair-alt"} size={50} color={"navy"} /> */}
 
-            />
+            </Marker>
 
           </MapView>
           {/* {err ? <Text> Please enable location services </Text>: null} */}
@@ -342,5 +351,27 @@ const styles = StyleSheet.create({
 
 });
 
+MapScreen.navigationOptions = {
+  tabBarIcon: <Feather name="map" size={20} />
+}
 
-export default MapScreen
+const mapStateToProp = (state) => {
+  return {
+    data: state.locationReducer.data,
+    newCoord: state.locationReducer.newCoord,
+    destInfo: state.locationReducer.destInfo,
+    loading: state.locationReducer.loading,
+
+
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateLocation: (newCoord) => dispatch(updateLocation(newCoord))
+  }
+}
+export default connect(mapStateToProp, mapDispatchToProps)(MapScreen)
+
+
+{/* <MapScreen data=globalStateData updateLoacation={anonFunc} */ }

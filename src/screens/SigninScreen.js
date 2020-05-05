@@ -21,10 +21,6 @@ const SigninScreen = () => {
             text="Don't have an account? Sign up instead!"
             routeName="Signup"
             />
-            <NavLink
-            routeName="Map"
-            text="Go to Map"
-            />
         </View>
     )
 }

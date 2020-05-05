@@ -23,7 +23,10 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk'
 import combineReducer from './src/reducers/combineReducer';
-import {loadData, loadAllData} from './src/actions/locationActions'
+import { SimpleLineIcons } from '@expo/vector-icons'
+import {loadData, loadAllData} from './src/actions/locationActions';
+
+
 
 // await loadAsync({
 //   // Load a font `Montserrat` from a static resource
@@ -36,26 +39,31 @@ import {loadData, loadAllData} from './src/actions/locationActions'
 
 // return <Text style={{ fontFamily: 'Montserrat' }} />;
 
+const Login = createStackNavigator({
+  Signup: SignupScreen,
+  Signin: SigninScreen
+})
+
+Login.navigationOptions = {
+  tabBarIcon: <SimpleLineIcons name="login" size={20} />
+}
 
 const switchNavigator = createSwitchNavigator({
 
   mainFlow: createBottomTabNavigator({
+    Login,
     screenFlow: createStackNavigator({
       // ChooseSite: ChooseSiteScreen,
       SavedList: SavedListScreen,
       ViewDetail: ViewDetailScreen,
-      SearchResults: SearchResultsScreen,
       Map: MapScreen,
       ManualUpdate: ManualUpdateScreen,
+      SearchResults: SearchResultsScreen,
     }),
-
+    
+    SearchResults: SearchResultsScreen,
     Map: MapScreen,
-    ManualUpdate: ManualUpdateScreen,
-
-    loginFlow: createStackNavigator({
-      Signup: SignupScreen,
-      Signin: SigninScreen
-    }),
+    // ManualUpdate: ManualUpdateScreen,
     Account: AccountScreen
   }),
 });
@@ -68,15 +76,8 @@ const switchNavigator = createSwitchNavigator({
 const App = createAppContainer(switchNavigator);
 
 const store = createStore(combineReducer, applyMiddleware(thunk));
-console.log(loadAllData([]))
+// console.log(loadAllData([]))
 store.dispatch(loadData());
-
-
-
-
-
-
-
 
 
 export default () => {
@@ -98,11 +99,4 @@ export default () => {
         </AuthProvider>
       </Provider>
     )
-
-
-
-
-
-
-
 }

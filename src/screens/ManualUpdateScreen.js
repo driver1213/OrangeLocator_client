@@ -1,5 +1,5 @@
 // import * as React from 'react';
-import { Image, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Image, Text, View, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 
@@ -9,12 +9,17 @@ import React, { useState, useEffect } from 'react';
 import { Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Button } from 'react-native-elements';
+import { updateLocation } from '../actions/locationActions'
+import { connect } from 'react-redux';
+import { Notifications } from 'expo';
+
+
 
 
 const { width } = Dimensions.get('window');
 const qrSize = width * 0.7;
 
-export default function App({navigation}) {
+const ScanCode = ({ navigation, updateLocationInComponent }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
@@ -27,9 +32,35 @@ export default function App({navigation}) {
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-    navigation.navigate("MapScreen",data);
     
+
+    if (data.includes(",") && data.includes("-")) {
+
+      updateLocationInComponent(data);
+      console.log("directily from scan:", data);
+      console.log('type of data', String(data).type);
+
+      Alert.alert(
+        'Here you go!',
+        'You current locations is updated!',
+        [
+
+          {
+            text: 'OK',
+            onPress: () => {
+              console.log('OK Pressed');
+              setScanned(false);
+              navigation.navigate('Map');
+            }
+          }
+        ]
+      );
+    }
+    else { alert(`You've just scanned "${data}". Please find the right barcode to scan!`) };
+
+    //////////////////////////////////////////////////////////////
+
+
   };
 
   if (hasPermission === null) {
@@ -52,22 +83,31 @@ export default function App({navigation}) {
         <Text style={styles.description}>Scan QR Code</Text>
 
         <Ionicons name="ios-qr-scanner" size={350} color="white" />
- 
-        <Text onPress={() => alert("Navigate back from here")} style={styles.cancel}>
+
+        <Text onPress={() => navigation.navigate('Map')} style={styles.cancel}>
           Cancel
             </Text>
 
       </BarCodeScanner>
 
 
-        {scanned && (
-          <Button title="Tap to Scan Again" color="orange" onPress={() => setScanned(false)} />
-        )}
+      {scanned && (
+        <Button title="Tap to Scan Again" color="orange" onPress={() => setScanned(false)} />
+      )}
 
 
     </View>
   );
 }
+
+const mapDispatchToProps = (dispatch) => {
+  console.log("scan updating to redux");
+  return {
+    updateLocationInComponent: (newCoord) => dispatch(updateLocation(newCoord))
+  }
+}
+export default connect(null, mapDispatchToProps)(ScanCode)
+
 
 const styles = StyleSheet.create({
 
@@ -97,3 +137,4 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
+

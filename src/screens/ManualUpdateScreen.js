@@ -9,8 +9,9 @@ import React, { useState, useEffect } from 'react';
 import { Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Button } from 'react-native-elements';
-import {updateLocation} from '../actions/locationActions'
-import {connect} from 'react-redux'
+import { updateLocation } from '../actions/locationActions'
+import { connect } from 'react-redux';
+import { Notifications } from 'expo';
 
 
 
@@ -20,7 +21,7 @@ import {connect} from 'react-redux'
 const { width } = Dimensions.get('window');
 const qrSize = width * 0.7;
 
-const ScanCode = ({navigation, updateLocationInComponent }) => {
+const ScanCode = ({ navigation, updateLocationInComponent }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
@@ -33,30 +34,32 @@ const ScanCode = ({navigation, updateLocationInComponent }) => {
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    
-    updateLocationInComponent(data);
-    console.log("directily from scan:",data);
 
-      Alert.alert(  
-          'Here you go!',  
-          'You current locations is updated!',  
-          [  
-              
-            {text: 'OKkkk', 
-            onPress: () => { 
+    if (data.includes(",") && data.includes("-")) {
+
+      updateLocationInComponent(data);
+      console.log("directily from scan:", data);
+      console.log('type of data', data.type);
+
+      Alert.alert(
+        'Here you go!',
+        'You current locations is updated!',
+        [
+
+          {
+            text: 'OK',
+            onPress: () => {
               console.log('OK Pressed');
               setScanned(false);
               navigation.navigate('Map');
             }
-          
-          
-          
-          },
-          ]  
-      );  
-  
-    ///////////////////////////////////////////// RNRestart.Restart();
- //////////////////////////////////////////////////////////////
+          }
+        ]
+      );
+    }
+    else { alert(`You've just scanned "${data}". Please find the right barcode to scan!`) };
+
+    //////////////////////////////////////////////////////////////
 
 
   };
@@ -81,17 +84,17 @@ const ScanCode = ({navigation, updateLocationInComponent }) => {
         <Text style={styles.description}>Scan QR Code</Text>
 
         <Ionicons name="ios-qr-scanner" size={350} color="white" />
- 
-        <Text onPress={() => alert("Navigate back from here")} style={styles.cancel}>
+
+        <Text onPress={() => navigation.navigate('Map')} style={styles.cancel}>
           Cancel
             </Text>
 
       </BarCodeScanner>
 
 
-        {scanned && (
-          <Button title="Tap to Scan Again" color="orange" onPress={() => setScanned(false)} />
-        )}
+      {scanned && (
+        <Button title="Tap to Scan Again" color="orange" onPress={() => setScanned(false)} />
+      )}
 
 
     </View>

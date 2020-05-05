@@ -3,12 +3,12 @@ import * as React from 'react';
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 //redux stuff
-import {connect} from 'react-redux'
-import {updateLocation} from '../actions/locationActions'
+import { connect } from 'react-redux'
+import { updateLocation } from '../actions/locationActions'
 
 // import { MonoText } from '../components/StyledText';
 
-import MapView, { Polyline, Marker, Callout } from 'react-native-maps';
+import MapView, { Polyline, Marker, Callout, AnimatedRegion } from 'react-native-maps';
 // import React, { useEffect, useState } from 'react';
 // import {safeAreaView} from 'react-navigation';
 // import {Text } from 'react-native-elements';
@@ -19,7 +19,7 @@ import { createStackNavigator, createAppContainer } from 'react-navigation';
 import Modal from 'react-native-modal';
 
 
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, } from '@expo/vector-icons';
 
 import { redLinePoints, greenLinePoints, brownLinePoints, blueLinePoints, orangeLinePoints, darkblueLinePoints } from '../context/mapLines';
 let mapStyle = require('../context/mapStyle.json');
@@ -30,44 +30,15 @@ let mapStyle = require('../context/mapStyle.json');
 class MapScreen extends React.Component {
   constructor(props) {
     super(props)
+
     this.state = {
-
-      loading: true,
-
-      region: {
-        latitude: 29.756295,
-        longitude: -95.362869,
-        latitudeDelta: 0.00412,
-        longitudeDelta: 0.0121,
-      },
-
-      currentLocationObj: {
-
-      },
-
-      destObj: {},
+      locationLog: [],
 
       isModalVisible: false,
-
-      data: {},
-
-      updatedCoord:"",
-
-
+      loading: true
     }
+
   }
-
-  // componentWillReceiveProps(nextProps) {
-  //   if (this.shouldUpdate(nextProps)) {
-  //     this.setState(() => ({
-  //       tracksViewChanges: true,
-  //     }));
-  //   }
-  // }
-  // shouldUpdate = (nextProps) => { //TODO implement 
-
-
-
 
   toggleModal = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
@@ -78,59 +49,66 @@ class MapScreen extends React.Component {
 
   render() {
 
-    
-    // if (this.state.loading) {
+
+    // if (this.props.loading) {
     //   return (<View><Text>Data Loading</Text></View>)
     // }
     // else
 
 
 
-      // console.log(this.state.data);
+    // console.log(this.props.data);
 
-      // const [err, setErr] = useState(null);
+    // const [err, setErr] = useState(null);
 
-      // const startWatching = async () => {
-      //   try {
-      //     await requestPermissionsAsync();
-      //     await watchPositionAsync({
-      //       accuracy: Accuracy.BestForNavigation,
-      //       timeInterval: 1000,
-      //       distanceInterval: 10
-      //     }, (location) => {
-      //       console.log(location);
+    // const startWatching = async () => {
+    //   try {
+    //     await requestPermissionsAsync();
+    //     await watchPositionAsync({
+    //       accuracy: Accuracy.BestForNavigation,
+    //       timeInterval: 1000,
+    //       distanceInterval: 10
+    //     }, (location) => {
+    //       console.log(location);
 
-      //     })
-      //   } catch (e) {
-      //     setErr(e);
-      //   }
-      // }
+    //     })
+    //   } catch (e) {
+    //     setErr(e);
+    //   }
+    // }
 
-      // useEffect(() => {
-      //   startWatching();
-      // }, []
-      // );
-
-
-
-      ////////////////////////////////
+    // useEffect(() => {
+    //   startWatching();
+    // }, []
+    // );
 
 
 
-      /////////////////
-      // console.log("+++++++++++++++++++++++++++++++", this.state.data[0].latitude)
+    ////////////////////////////////
 
 
-      // const updatedLocationObj = this.state.data[0];
+
+    /////////////////
+    // console.log("+++++++++++++++++++++++++++++++", this.state.data[0].latitude)
 
 
-    // console.log("currentMarker=========================", this.state.currentLocationObj);
-    // console.log(this.state.currentLocationObj.latitude);
-    // console.log(this.state.scanText);
 
-    console.log("the  newcoord from prop is :---------------------------",this.props.newCoord);
-    console.log("the coord from state is :---------------------------",this.state.updatedCoord);
-    const NewLat= parseFloat(this.props.newCoord);
+    let rawUpdatedCoordArray = this.props.newCoord.split(",");
+    // console.log('raw', rawUpdatedCoordArray);
+
+    let parsedCoord = [parseFloat(rawUpdatedCoordArray[1]), parseFloat(rawUpdatedCoordArray[0])];
+    // console.log('parsed: ', parsedCoord);
+
+    let newLatLngObj = { latitude: parsedCoord[0], longitude: parsedCoord[1] };
+    // console.log(newLatLngObj);
+
+    // let destLatLngObj = { latitude: this.props.destInfo.latitude, longitude: this.props.destInfo.longitude};
+    // console.log(destLatLngObj);
+    // console.log("destInfo-------------------from props")
+    // console.log(JSON.stringify(this.props.destInfo));
+    // console.log(this.props.destInfo);
+
+
 
 
 
@@ -142,7 +120,6 @@ class MapScreen extends React.Component {
         coordObj = { latitude: point[1], longitude: point[0] }
         coordArray.push(coordObj)
       })
-      // console.log(coordArray);
 
       return coordArray;
     }
@@ -211,29 +188,39 @@ class MapScreen extends React.Component {
             />
 
 
-            {/* <MapView.Marker
+            <Marker
+              key={2}
+              title={this.props.destInfo.name}
+              coordinate={
+                {
+                  latitude: this.props.destInfo.latitude,
+                  longitude: this.props.destInfo.longitude
+                  // latitude: 29.7544285,
+                  // longitude: -95.3748376
 
+                }
+              }
+            >
 
-            /> */}
+            </Marker>
 
             <Marker
 
-              key={this.state.currentLocationObj._id}
+              key={1}
+              pinColor={"navy"}
+              coordinate={
+                newLatLngObj
+                // {
+                //   latitude: 29.7544285,
+                //   longitude: -95.3748376
+                // }
+              }
+              title={"Your Last Location"}
 
-              // key={ `${marker.id}${Date.now()}` } //update itself
+            >
+              {/* <Ionicons name={"ios-walk"} size={50} color={"navy"} /> */}
 
-              coordinate={{
-                // latitude: this.props.data[2].latitude,
-                // longitude: this.props.data[2].longitude
-                latitude: NewLat,
-                // latitude: 29.7544285,
-                longitude: -95.3748376
-              }}
-
-
-              title={this.state.currentLocationObj.name}
-
-            />
+            </Marker>
 
           </MapView>
           {/* {err ? <Text> Please enable location services </Text>: null} */}
@@ -362,8 +349,11 @@ const styles = StyleSheet.create({
 const mapStateToProp = (state) => {
   return {
     data: state.locationReducer.data,
-    newCoord: state.locationReducer.newCoord
-    
+    newCoord: state.locationReducer.newCoord,
+    destInfo: state.locationReducer.destInfo,
+    loading: state.locationReducer.loading,
+
+
   }
 }
 
@@ -375,4 +365,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(mapStateToProp, mapDispatchToProps)(MapScreen)
 
 
-{/* <MapScreen data=globalStateData updateLoacation={anonFunc} */}
+{/* <MapScreen data=globalStateData updateLoacation={anonFunc} */ }

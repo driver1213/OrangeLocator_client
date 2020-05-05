@@ -39,19 +39,19 @@ import {loadData, loadAllData} from './src/actions/locationActions';
 
 // return <Text style={{ fontFamily: 'Montserrat' }} />;
 
-const login = createStackNavigator({
+const Login = createStackNavigator({
   Signup: SignupScreen,
   Signin: SigninScreen
 })
 
-login.navigationOptions = {
+Login.navigationOptions = {
   tabBarIcon: <SimpleLineIcons name="login" size={20} />
 }
 
 const switchNavigator = createSwitchNavigator({
 
   mainFlow: createBottomTabNavigator({
-    login,
+    Login,
     screenFlow: createStackNavigator({
       // ChooseSite: ChooseSiteScreen,
       SavedList: SavedListScreen,
@@ -80,12 +80,6 @@ const store = createStore(combineReducer, applyMiddleware(thunk));
 store.dispatch(loadData());
 
 
-
-
-
-
-
-
 export default () => {
 
 
@@ -105,11 +99,4 @@ export default () => {
         </AuthProvider>
       </Provider>
     )
-
-
-
-
-
-
-
 }

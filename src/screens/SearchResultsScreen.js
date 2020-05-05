@@ -88,7 +88,7 @@ class SearchStoreResults extends Component {
                 'New Destination',
                 `Are you sure want to set "${item.name}" as new destination?`,
                 [
-                  { text: 'Set as "My Favivrate"', onPress: () => {
+                  { text: 'Set as "My Favorite"', onPress: () => {
                     this.props.addFav(item);
                     alert(`${item.name} has saved in your Fav List`);
                     console.log('Fav Saved')} },
@@ -128,7 +128,8 @@ class SearchStoreResults extends Component {
 
 SearchStoreResults.navigationOptions = {
   tabBarIcon: <Feather  name="search" size={20} />,
-  tabBarLabel: "Search Stores in Tunnel"
+  tabBarLabel: "Search Stores in Tunnel",
+  headerShown: true
   }
 
 

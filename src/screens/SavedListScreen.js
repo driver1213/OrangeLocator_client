@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, ActivityIndicator, Alert } from 'react-native';
+import { View, Text, FlatList, ActivityIndicator, Alert, SafeAreaView } from 'react-native';
 import { ListItem, SearchBar } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { addFav, delFav, selectDest } from '../actions/locationActions';
@@ -77,7 +77,7 @@ class SavedList extends Component {
 
 
         return (
-            <View style={{ flex: 1 }}>
+            <SafeAreaView style={{ flex: 1 }}>
                 <FlatList
                     data={this.state.data}
                     renderItem={({ item }) => (
@@ -90,7 +90,7 @@ class SavedList extends Component {
                                 `What do you want do to with  "${item.name}" ?`,
                                 [
                                     {
-                                        text: 'Delete From "My Favivrate"', onPress: () => {
+                                        text: 'Delete From "My Favorite"', onPress: () => {
                                             this.props.delFav(item);
 
                                             console.log('Ask me later pressed')
@@ -125,7 +125,9 @@ class SavedList extends Component {
                     ItemSeparatorComponent={this.renderSeparator}
                     ListHeaderComponent={this.renderHeader}
                 />
-            </View>
+            </SafeAreaView >
+
+
         );
     }
 }

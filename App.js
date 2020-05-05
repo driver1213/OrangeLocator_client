@@ -37,18 +37,19 @@ import { SimpleLineIcons } from '@expo/vector-icons'
 
 // return <Text style={{ fontFamily: 'Montserrat' }} />;
 
-const loginFlow = createStackNavigator({
+const login = createStackNavigator({
   Signup: SignupScreen,
   Signin: SigninScreen
 })
 
-loginFlow.navigationOptions = {
+login.navigationOptions = {
   tabBarIcon: <SimpleLineIcons name="login" size={20} />
 }
 
 const switchNavigator = createSwitchNavigator({
 
   mainFlow: createBottomTabNavigator({
+    login,
     screenFlow: createStackNavigator({
       // ChooseSite: ChooseSiteScreen,
       SavedList: SavedListScreen,
@@ -59,9 +60,7 @@ const switchNavigator = createSwitchNavigator({
     }),
 
     Map: MapScreen,
-    ManualUpdate: ManualUpdateScreen,
-
-    loginFlow,
+    // ManualUpdate: ManualUpdateScreen,
     Account: AccountScreen
   }),
 });

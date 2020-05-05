@@ -86,7 +86,7 @@ class SearchStoreResults extends Component {
                 'New Destination',
                 `Are you sure want to set "${item.name}" as new destination?`,
                 [
-                  { text: 'Set as "My Favivrate"', onPress: () => console.log('Ask me later pressed') },
+                  { text: 'Set as "My Favorite"', onPress: () => console.log('Ask me later pressed') },
                   {
                     text: 'Cancel',
                     onPress: () => console.log('Cancel Pressed'),

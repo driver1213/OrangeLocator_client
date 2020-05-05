@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, ActivityIndicator, Alert } from 'react-native';
+import { View, StyleSheet, FlatList, ActivityIndicator, Alert, SafeAreaView } from 'react-native';
 import { ListItem, SearchBar } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { selectDest, addFav } from '../actions/locationActions';
@@ -94,7 +94,7 @@ class SearchStoreResults extends Component {
                 'New Destination',
                 `Are you sure want to set "${item.name}" as new destination?`,
                 [
-                  { text: 'Set as "My Favivrate"', onPress: () => {
+                  { text: 'Set as "My Favorite"', onPress: () => {
                     this.props.addFav(item);
                     console.log(this.props.fav)
                     alert(`${item.name} has saved in your Fav List`);

@@ -23,6 +23,7 @@ Next user can choose the destination from the list by pushing the button "New De
 Than the user can  go to the place, updating the location  by scanning the QR codes.<br/>
 User can also  save favorite locations <br/>
 ![scr](public/savt1.jpg) ![scr](public/save2.jpg)
+<br/>
 
 
 

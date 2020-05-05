@@ -38,7 +38,7 @@ class SearchResultsScreen extends Component {
 
 
   componentWillMount() {
-    fetch('http://10.0.0.246:3000/stores')
+    fetch('http://98.195.43.142:3000/stores')
       .then(results => results.json())
       .then(data => {
         this.setState({

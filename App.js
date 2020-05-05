@@ -40,19 +40,19 @@ import PropTypes from 'prop-types';
 
 // return <Text style={{ fontFamily: 'Montserrat' }} />;
 
-const login = createStackNavigator({
+const Login = createStackNavigator({
   Signup: SignupScreen,
   Signin: SigninScreen
 })
 
-login.navigationOptions = {
+Login.navigationOptions = {
   tabBarIcon: <SimpleLineIcons name="login" size={20} />
 }
 
 const switchNavigator = createSwitchNavigator({
 
   mainFlow: createBottomTabNavigator({
-    login,
+    Login,
     screenFlow: createStackNavigator({
       // ChooseSite: ChooseSiteScreen,
       SavedList: SavedListScreen,
@@ -82,11 +82,11 @@ store.dispatch(loadData());
 
 
 
-App.propTypes = {
-  data: PropTypes.array.isRequired,
-  newCoord: PropTypes.string.isRequired,
-  destInfo: PropTypes.object.isRequired,
-};
+// App.propTypes = {
+//   data: PropTypes.array.isRequired,
+//   newCoord: PropTypes.string.isRequired,
+//   destInfo: PropTypes.object.isRequired,
+// };
 
 
 

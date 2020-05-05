@@ -23,13 +23,35 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk'
 import combineReducer from './src/reducers/combineReducer';
+import { SimpleLineIcons } from '@expo/vector-icons'
 import {loadData, loadAllData} from './src/actions/locationActions';
 
 
 
+// await loadAsync({
+//   // Load a font `Montserrat` from a static resource
+//   "Nunito-Bold": require('./assets/fonts/Nunito-Bold.ttf'),
+//   "Nunito-Regular": require('./assets/fonts/Nunito-Bold.ttf')
+
+// });
+
+// //Use the font with the fontFamily property
+
+// return <Text style={{ fontFamily: 'Montserrat' }} />;
+
+const login = createStackNavigator({
+  Signup: SignupScreen,
+  Signin: SigninScreen
+})
+
+login.navigationOptions = {
+  tabBarIcon: <SimpleLineIcons name="login" size={20} />
+}
+
 const switchNavigator = createSwitchNavigator({
 
   mainFlow: createBottomTabNavigator({
+    login,
     screenFlow: createStackNavigator({
       // ChooseSite: ChooseSiteScreen,
       SavedList: SavedListScreen,
@@ -42,11 +64,6 @@ const switchNavigator = createSwitchNavigator({
     SearchResults: SearchResultsScreen,
     Map: MapScreen,
     // ManualUpdate: ManualUpdateScreen,
-
-    loginFlow: createStackNavigator({
-      Signup: SignupScreen,
-      Signin: SigninScreen
-    }),
     Account: AccountScreen
   }),
 });

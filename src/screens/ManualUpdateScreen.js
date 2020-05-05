@@ -34,14 +34,13 @@ const ScanCode = ({ navigation, updateLocationInComponent }) => {
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
+    
 
-    dataString = String(data);
+    if (data.includes(",") && data.includes("-")) {
 
-    if (dataString.includes(",") && dataString.includes("-")) {
-
-      updateLocationInComponent(dataString);
-      console.log("directily from scan:", dataString);
-      console.log('type of datas', dataString.type);
+      updateLocationInComponent(data);
+      console.log("directily from scan:", data);
+      console.log('type of data', String(data).type);
 
       Alert.alert(
         'Here you go!',
@@ -59,7 +58,7 @@ const ScanCode = ({ navigation, updateLocationInComponent }) => {
         ]
       );
     }
-    else { alert(`You've just scanned "${dataString}". Please find the right barcode to scan!`) };
+    else { alert(`You've just scanned "${data}". Please find the right barcode to scan!`) };
 
     //////////////////////////////////////////////////////////////
 

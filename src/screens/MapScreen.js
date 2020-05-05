@@ -34,7 +34,7 @@ class MapScreen extends React.Component {
     this.state = {
 
       isModalVisible: false,
-      loading: true
+      // loading: true
     }
 
   }
@@ -147,11 +147,12 @@ class MapScreen extends React.Component {
 
             }}
 
-            showsUserLocation={true}
-            showsIndoors={true}
-            showsIndoorLevelPicker={true}
+            // showsUserLocation={true}
+            // showsIndoors={true}
+            // showsIndoorLevelPicker={true}
             // cacheEnabled={true}
-            toolbarEnabled={true}
+ 
+  
           // animateCamera 
 
           >
@@ -221,7 +222,7 @@ class MapScreen extends React.Component {
 
             >
               {/* <Ionicons name={"ios-walk"} size={50} color={"navy"} /> */}
-              <FontAwesome name={"wheelchair-alt"} size={50} color={"navy"} />
+              {/* <FontAwesome name={"wheelchair-alt"} size={50} color={"navy"} /> */}
 
             </Marker>
 
@@ -355,7 +356,6 @@ const mapStateToProp = (state) => {
     newCoord: state.locationReducer.newCoord,
     destInfo: state.locationReducer.destInfo,
     loading: state.locationReducer.loading,
-    locationLog:state.locationReducer.locationLog
 
 
   }

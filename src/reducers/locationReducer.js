@@ -24,6 +24,9 @@ let locationReducer = (state, action) => {
 
             loading: false,
 
+            locationLog: [],
+
+
 
         }
     }
@@ -44,7 +47,9 @@ let locationReducer = (state, action) => {
             console.log("in reducer UPDATE_LOCATION payload", action.payload)
             return {
                 ...state,
-                newCoord: action.payload
+                newCoord: action.payload,
+                // locationLog : state.locationLog.unshift(action.payload)
+
             }
 
 

@@ -19,7 +19,7 @@ import { createStackNavigator, createAppContainer } from 'react-navigation';
 import Modal from 'react-native-modal';
 
 
-import { Ionicons, } from '@expo/vector-icons';
+import { Ionicons, FontAwesome } from '@expo/vector-icons';
 
 import { redLinePoints, greenLinePoints, brownLinePoints, blueLinePoints, orangeLinePoints, darkblueLinePoints } from '../context/mapLines';
 let mapStyle = require('../context/mapStyle.json');
@@ -32,7 +32,6 @@ class MapScreen extends React.Component {
     super(props)
 
     this.state = {
-      locationLog: [],
 
       isModalVisible: false,
       loading: true
@@ -107,6 +106,7 @@ class MapScreen extends React.Component {
     // console.log("destInfo-------------------from props")
     // console.log(JSON.stringify(this.props.destInfo));
     // console.log(this.props.destInfo);
+    console.log(this.props.locationLog);
 
 
 
@@ -201,7 +201,9 @@ class MapScreen extends React.Component {
                 }
               }
             >
-
+              <Callout
+                description={"What is it"}
+             / >
             </Marker>
 
             <Marker
@@ -219,6 +221,7 @@ class MapScreen extends React.Component {
 
             >
               {/* <Ionicons name={"ios-walk"} size={50} color={"navy"} /> */}
+              <FontAwesome name={"wheelchair-alt"} size={50} color={"navy"} />
 
             </Marker>
 
@@ -352,6 +355,7 @@ const mapStateToProp = (state) => {
     newCoord: state.locationReducer.newCoord,
     destInfo: state.locationReducer.destInfo,
     loading: state.locationReducer.loading,
+    locationLog:state.locationReducer.locationLog
 
 
   }

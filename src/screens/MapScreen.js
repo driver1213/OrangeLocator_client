@@ -335,7 +335,7 @@ const styles = StyleSheet.create({
 });
 
 MapScreen.navigationOptions = {
-  tabBarIcon: <Feather name="map" size={20} />
+  tabBarIcon: <Feather name="map" size={40} />
 }
 
 const mapStateToProp = (state) => {

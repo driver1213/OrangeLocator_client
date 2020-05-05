@@ -100,6 +100,11 @@ const ScanCode = ({ navigation, updateLocationInComponent }) => {
   );
 }
 
+
+ScanCode.navigationOptions = {
+  tabBarIcon: <Ionicons name="ios-qr-scanner" size={20} />
+}
+
 const mapDispatchToProps = (dispatch) => {
   console.log("scan updating to redux");
   return {

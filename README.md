@@ -17,6 +17,9 @@ The app shows the map of the tunnels.<br/>
 When user riches the first  QR code in tunnel, pushes the button "Update Location" on the map screen. The app opens QR-code scanner. User updates  current position. now it is marked with blue pin on the map<br/>
 ![screenshot](public/qr.jpg)<br/>
 
+Next user can choose the destination from the list by pushing the button "New Destination"<br/>
+![screenshot](public/list_lock.jpg)<br/>
+
 
 ## Technologies used
 * React-Native
@@ -33,7 +36,7 @@ When user riches the first  QR code in tunnel, pushes the button "Update Locatio
 
 
 ## Authors
-* [Richard Zhang](https://github.com/getrealzx) ()
-* [Diego Rivera](https://github.com/driver1213)()
+* [Richard Zhang](https://github.com/getrealzx)(https://rztexas.netlify.app/)
+* [Diego Rivera](https://github.com/driver1213)(https://driver1213.github.io/)
 * [Sean Page](https://github.com/PageSeanA)(http://seanapage.tech/)
 * [Alina Belova](https://github.com/AlinaNBelova)(https://alinabelova.netlify.app)

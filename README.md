@@ -11,10 +11,11 @@ to sign up and sign in. <br/>
 <br/>
 
 The user opens the OrangeLocation app right before going down to the tunnels. <br/>
-The app shows the map of the tunnels.
-![screenshot](public/map.jpg)
+The app shows the map of the tunnels.<br/>
+![screenshot](public/map.jpg)<br/>
 
-
+When user riches the first  QR code in tunnel, pushes the button "Update Location" on the map screen. The app opens QR-code scanner. User updates  current position. now it is marked with blue pin on the map<br/>
+![screenshot](public/qr.jpg)<br/>
 
 
 ## Technologies used

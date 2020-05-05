@@ -2,9 +2,11 @@
 
 
 import React, { Component } from 'react';
-import { View, Text, FlatList, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import { ListItem, SearchBar } from 'react-native-elements';
 import { connect } from 'react-redux'
+import Spacer from '../components/Spacer';
+import { SafeAreaView } from 'react-navigation';
 
 
 class SearchStoreResults extends Component {
@@ -61,18 +63,18 @@ class SearchStoreResults extends Component {
     });
   };
 
-  renderHeader = () => {
-    return (
-      <SearchBar
-        placeholder="Type Here..."
-        lightTheme
-        round
-        onChangeText={text => this.searchFilterFunction(text)}
-        autoCorrect={false}
-        value={this.state.value}
-      />
-    );
-  };
+  // renderHeader = () => {
+  //   return (
+  //     <SearchBar 
+  //       placeholder="Type Here..."
+  //       lightTheme
+  //       round
+  //       onChangeText={text => this.searchFilterFunction(text)}
+  //       autoCorrect={false}
+  //       value={this.state.value}
+  //     />
+  //   );
+  // };
 
   render() {
     
@@ -85,7 +87,15 @@ class SearchStoreResults extends Component {
       );
     }
     return (
-      <View style={{ flex: 1 }}>
+      <SafeAreaView style={styles.styling} >
+        <SearchBar 
+        placeholder="Search"
+        lightTheme
+        round
+        onChangeText={text => this.searchFilterFunction(text)}
+        autoCorrect={false}
+        value={this.state.value}
+      />
         <FlatList
           data={this.state.data}
           renderItem={({ item }) => (
@@ -96,12 +106,18 @@ class SearchStoreResults extends Component {
           )}
           keyExtractor={item => item._id}
           ItemSeparatorComponent={this.renderSeparator}
-          ListHeaderComponent={this.renderHeader}
+          // ListHeaderComponent={this.renderHeader}
         />
-      </View>
+      </SafeAreaView>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  styling: {
+      marginTop: 50
+  }
+})
 
 
 const mapStateToProp = (state) => {

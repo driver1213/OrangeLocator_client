@@ -1,4 +1,4 @@
-import {LOAD_DATA, UPDATE_LOCATION} from '../actions/types';
+import { LOAD_DATA, UPDATE_LOCATION } from '../actions/types';
 
 
 let locationReducer = (state, action) => {
@@ -6,31 +6,54 @@ let locationReducer = (state, action) => {
     if (state === undefined) {
         state = {
             data: [],
-            newCoord: 29.7544285,
+
+            newCoord: "-95.366296,29.757723",
+
+            destInfo: {
+                "name": "Wells Fargo Plaza",
+                "info": {
+                    "phone": "(713) 654-2100",
+                    "address": "1000 Louisiana St, Houston, TX 77002"
+                },
+                "wifiMacAddress": "0.0.0.0",
+                "imgUrl": "",
+                "category": "Bank",
+                "longitude": -95.3681076,
+                "latitude": 29.7582497,
+            },
+
+            loading: false,
+
+            locationLog: [],
+
+
+
         }
     }
     console.log(action.type)
-    
+
     switch (action.type) {
         case LOAD_DATA:
             // console.log("reducer is called");
             let newState = {
                 ...state,
-                data:action.payload
+                data: action.payload
             }
             // console.log(newState)
             return newState
 
 
-            case UPDATE_LOCATION:
-                console.log("in reducer UPDATE_LOCATION payload", action.payload)
-                return{
-                    ...state,
-                    newCoord: action.payload
-                }
+        case UPDATE_LOCATION:
+            console.log("in reducer UPDATE_LOCATION payload", action.payload)
+            return {
+                ...state,
+                newCoord: action.payload,
+                // locationLog : state.locationLog.unshift(action.payload)
+
+            }
 
 
-            // case LOCATION_RECORDS:
+        // case LOCATION_RECORDS:
 
 
 

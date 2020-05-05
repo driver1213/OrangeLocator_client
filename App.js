@@ -24,19 +24,7 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk'
 import combineReducer from './src/reducers/combineReducer';
 import {loadData, loadAllData} from './src/actions/locationActions';
-import PropTypes from 'prop-types';
 
-
-// await loadAsync({
-//   // Load a font `Montserrat` from a static resource
-//   "Nunito-Bold": require('./assets/fonts/Nunito-Bold.ttf'),
-//   "Nunito-Regular": require('./assets/fonts/Nunito-Bold.ttf')
-
-// });
-
-// //Use the font with the fontFamily property
-
-// return <Text style={{ fontFamily: 'Montserrat' }} />;
 
 
 const switchNavigator = createSwitchNavigator({
@@ -46,13 +34,14 @@ const switchNavigator = createSwitchNavigator({
       // ChooseSite: ChooseSiteScreen,
       SavedList: SavedListScreen,
       ViewDetail: ViewDetailScreen,
-      SearchResults: SearchResultsScreen,
       Map: MapScreen,
       ManualUpdate: ManualUpdateScreen,
+      SearchResults: SearchResultsScreen,
     }),
-
+    
+    SearchResults: SearchResultsScreen,
     Map: MapScreen,
-    ManualUpdate: ManualUpdateScreen,
+    // ManualUpdate: ManualUpdateScreen,
 
     loginFlow: createStackNavigator({
       Signup: SignupScreen,
@@ -76,11 +65,6 @@ store.dispatch(loadData());
 
 
 
-App.propTypes = {
-  data: PropTypes.array.isRequired,
-  newCoord: PropTypes.string.isRequired,
-  destInfo: PropTypes.object.isRequired,
-};
 
 
 

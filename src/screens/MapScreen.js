@@ -16,8 +16,7 @@ import MapView, { Polyline, Marker, Callout, AnimatedRegion } from 'react-native
 import { requestPermissionsAsync, watchPositionAsync, Accuracy } from 'expo-location';
 import '../components/_mockLocations';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-import Modal from 'react-native-modal';
-import { Ionicons, FontAwesome, Feather } from '@expo/vector-icons';
+import { Ionicons, Feather, FontAwesome } from '@expo/vector-icons';
 import { redLinePoints, greenLinePoints, brownLinePoints, blueLinePoints, orangeLinePoints, darkblueLinePoints } from '../context/mapLines';
 let mapStyle = require('../context/mapStyle.json');
 
@@ -30,15 +29,11 @@ class MapScreen extends React.Component {
 
     this.state = {
 
-      isModalVisible: false,
       // loading: true
     }
 
   }
 
-  toggleModal = () => {
-    this.setState({ isModalVisible: !this.state.isModalVisible });
-  };
 
 
 
@@ -103,7 +98,8 @@ class MapScreen extends React.Component {
     // console.log("destInfo-------------------from props")
     // console.log(JSON.stringify(this.props.destInfo));
     // console.log(this.props.destInfo);
-    console.log(this.props.locationLog);
+    console.log("the location log---------------------------", this.props.locationLog);
+    // console.log(this.props.destInfo);
 
 
 
@@ -137,19 +133,19 @@ class MapScreen extends React.Component {
             customMapStyle={mapStyle}
 
             initialRegion={{
-              latitude:  parsedCoord[0],
-              longitude:  parsedCoord[1],
+              latitude: parsedCoord[0],
+              longitude: parsedCoord[1],
               latitudeDelta: 0.003812,
               longitudeDelta: 0.00521,
 
             }}
 
-            // showsUserLocation={true}
-            // showsIndoors={true}
-            // showsIndoorLevelPicker={true}
-            // cacheEnabled={true}
- 
-  
+          // showsUserLocation={true}
+          // showsIndoors={true}
+          // showsIndoorLevelPicker={true}
+          // cacheEnabled={true}
+
+
           // animateCamera 
 
           >
@@ -198,13 +194,13 @@ class MapScreen extends React.Component {
 
                 }
               }
-              // img={{ uri: '../../assets/images/orange_logo_map_marker.png'}}
+            // img={{ uri: '../../assets/images/orange_logo_map_marker.png'}}
 
 
             >
 
-            <Image source={require('../../assets/images/rsz_1orange_logo_map_marker.png')} ></Image>
-            
+              <Image source={require('../../assets/images/rsz_1orange_logo_map_marker.png')} ></Image>
+
             </Marker>
 
             <Marker
@@ -232,25 +228,12 @@ class MapScreen extends React.Component {
 
         </View>
 
-        <View style={styles.bubble1}>
           <TouchableOpacity
-
-            onPress={this.toggleModal}
-          >
+            style={styles.bubble1}
+            onPress={() => this.props.navigation.navigate("SearchResults")}
+            >
             <Text style={styles.scanText}>New Destination</Text>
           </TouchableOpacity>
-
-          <Modal isVisible={this.state.isModalVisible}>
-
-            <View style={{ flex: 1 }}>
-              <Text>Hello!</Text>
-              <TouchableOpacity style={styles.modalButton} onPress={this.toggleModal}>
-                <Text style={styles.scanText}> Search </Text>
-
-              </TouchableOpacity>
-            </View>
-          </Modal>
-        </View>
 
 
 
@@ -360,6 +343,7 @@ const mapStateToProp = (state) => {
     newCoord: state.locationReducer.newCoord,
     destInfo: state.locationReducer.destInfo,
     loading: state.locationReducer.loading,
+    locationLog:state.locationReducer.locationLog
 
 
   }

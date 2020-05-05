@@ -53,7 +53,7 @@ class StillMapScreen extends React.Component {
   }
 
  fetchData = async () =>{
-   const res = await fetch('http://:3000/stores');
+   const res = await fetch('http://98.195.43.142:3000/stores');
    const json=await res.json();
    this.setState({data: json.data});
  }

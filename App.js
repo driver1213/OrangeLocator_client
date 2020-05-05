@@ -23,8 +23,11 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk'
 import combineReducer from './src/reducers/combineReducer';
-import {loadData, loadAllData} from './src/actions/locationActions'
 import { SimpleLineIcons } from '@expo/vector-icons'
+import {loadData, loadAllData} from './src/actions/locationActions';
+import PropTypes from 'prop-types';
+
+
 
 // await loadAsync({
 //   // Load a font `Montserrat` from a static resource
@@ -79,7 +82,11 @@ store.dispatch(loadData());
 
 
 
-
+App.propTypes = {
+  data: PropTypes.array.isRequired,
+  newCoord: PropTypes.string.isRequired,
+  destInfo: PropTypes.object.isRequired,
+};
 
 
 

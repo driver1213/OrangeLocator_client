@@ -1,4 +1,4 @@
-import { LOAD_DATA, UPDATE_LOCATION, SELECT_DEST } from '../actions/types';
+import { LOAD_DATA, UPDATE_LOCATION, SELECT_DEST, ADD_FAV, DEL_FAV } from '../actions/types';
 
 
 let locationReducer = (state, action) => {
@@ -26,6 +26,26 @@ let locationReducer = (state, action) => {
 
             locationLog: [],
 
+            fav: [
+                
+                {
+                "info": {
+                "phone": "(713) 654-1300",
+                "address": "1001 Louisiana St, Houston, TX 77002"
+                },
+                "_id": "5eabb53700b1fa158dde2f4b",
+                "name": "District 7 Grill",
+                "imgUrl": "",
+                "category": "Food",
+                "latitude": 29.7579896,
+                "longitude": -95.367489
+                }
+
+
+
+
+            ],
+
 
 
         }
@@ -45,60 +65,68 @@ let locationReducer = (state, action) => {
 
         case UPDATE_LOCATION:
             console.log("in reducer UPDATE_LOCATION payload", action.payload)
-            let tempLocationLog=[...state.locationLog];
+            let tempLocationLog = [...state.locationLog];
             tempLocationLog.unshift(action.payload);
-            
+
             return {
                 ...state,
                 newCoord: action.payload,
-                locationLog : [...tempLocationLog]
+                locationLog: [...tempLocationLog]
 
             }
 
         case SELECT_DEST:
-            console.log("Reducer payload for select NewDest",action.payload)
-            return{
+            // console.log("Reducer payload for select NewDest",action.payload)
+            return {
                 ...state,
-                destInfo:action.payload,
+                destInfo: action.payload,
 
             }
-        // case LOCATION_RECORDS:
 
+        // case ADD_FAV:
+        //     console.log("in reducer ADD_FAV payload", action.payload);
 
-
-        // // case ADD_COUNTRY:
-        // //     if (state.selected.includes(action.payload)) {
-        // //         // console.log("xxxxxxxxxxxxxxxxxxxxxxExistedxxxxxxxxxxxxxxxxxxx");
-        // //         alert("Entry is already selected");
-        // //         return state;
-
-        // //     }
-
-        // //     else if (state.selected.length >= 8) {
-        // //         alert("You may select up to 8 to study,Too Many Selected!");
-        // //         return state;
-        // //     }
-
+        //     if (state.fav.includes(action.payload){
+        //         alert("You've Already Added");
+        //         return stete;
+        //     }
         //     return {
         //         ...state,
-        //         selected: state.selected.concat(action.payload)
+        //         fav: state.fave.concat(action.payload)
         //     }
+        
+        // // case DEL_FAv
 
 
 
-        // case DELETE_COUNTRY:
 
-        //     let updatedList = state.selected.filter(countryObj => {
-        //         console.log(countryObj.Country, action.region.Country);
-        //         return countryObj.Country !== action.region.Country
 
-        //     })
-        //     console.log("updatedLIst", updatedList);
+        case ADD_FAV:
+            if (state.fav.includes(action.payload)) {
+                // console.log("xxxxxxxxxxxxxxxxxxxxxxExistedxxxxxxxxxxxxxxxxxxx");
+                alert("You've Aready Added");
+                return state;
+            }
+            return {
+                ...state,
+                fav: state.fav.concat(action.payload)
+            }
 
-        //     return {
-        //         ...state,
-        //         selected: updatedList
-        //     }
+
+
+        case DEL_FAV:
+
+            let temFav = state.fave.filter(favObj => {
+
+                return favObj._id !== action.payload._id
+
+            })
+            console.log("temFav", temFav);
+
+            return {
+                ...state,
+                fave: TemFav
+            }
 
         default:
             // console.log(state.data)

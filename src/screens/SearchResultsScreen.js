@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, FlatList, ActivityIndicator, Alert } from 'react-native';
 import { ListItem, SearchBar } from 'react-native-elements';
 import { connect } from 'react-redux';
-import { selectDest } from '../actions/locationActions';
+import { selectDest, addFav } from '../actions/locationActions';
 import PropTypes from 'prop-types';
 
 
@@ -86,7 +86,11 @@ class SearchStoreResults extends Component {
                 'New Destination',
                 `Are you sure want to set "${item.name}" as new destination?`,
                 [
-                  { text: 'Set as "My Favivrate"', onPress: () => console.log('Ask me later pressed') },
+                  { text: 'Set as "My Favivrate"', onPress: () => {
+                    this.props.addFav(item);
+                    console.log(this.props.fav)
+                    alert(`${item.name} has saved in your Fav List`);
+                    console.log('Fav Saved')} },
                   {
                     text: 'Cancel',
                     onPress: () => console.log('Cancel Pressed'),
@@ -124,6 +128,7 @@ class SearchStoreResults extends Component {
 
 SearchStoreResults.propTypes = {
   selectDest: PropTypes.func.isRequired,
+  addFav: PropTypes.func.isRequired,
   destInfo: PropTypes.object.isRequired
 
 };
@@ -144,4 +149,4 @@ const mapStateToProp = (state) => {
 //   // }
 // })
 
-export default connect(mapStateToProp, { selectDest })(SearchStoreResults)
+export default connect(mapStateToProp, { selectDest,addFav })(SearchStoreResults)

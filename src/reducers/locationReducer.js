@@ -41,9 +41,6 @@ let locationReducer = (state, action) => {
                 "longitude": -95.367489
                 }
 
-
-
-
             ],
 
 
@@ -83,35 +80,21 @@ let locationReducer = (state, action) => {
 
             }
 
-        // case ADD_FAV:
-        //     console.log("in reducer ADD_FAV payload", action.payload);
-
-        //     if (state.fav.includes(action.payload){
-        //         alert("You've Already Added");
-        //         return stete;
-        //     }
-        //     return {
-        //         ...state,
-        //         fav: state.fave.concat(action.payload)
-        //     }
-        
-        // // case DEL_FAv
-
-
-
-
-
+   
         case ADD_FAV:
-            if (state.fav.includes(action.payload)) {
-                // console.log("xxxxxxxxxxxxxxxxxxxxxxExistedxxxxxxxxxxxxxxxxxxx");
-                alert("You've Aready Added");
-                return state;
-            }
-            return {
-                ...state,
-                fav: state.fav.concat(action.payload)
-            }
-
+            // if (state.fav.includes(action.payload)) {
+            //     // console.log("xxxxxxxxxxxxxxxxxxxxxxExistedxxxxxxxxxxxxxxxxxxx");
+            //     alert("You've Aready Added");
+            //     return state;
+            // } else {
+                // console.log("before you Add Fav, the Fav is", state.fav)
+                console.log("Trying to concat state to fav array")
+                console.log(state.fav)
+                return {
+                    ...state,
+                    fav: state.fav.concat(action.payload)
+                }
+            // }
 
 
         case DEL_FAV:

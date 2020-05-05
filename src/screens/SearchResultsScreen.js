@@ -4,6 +4,8 @@ import { ListItem, SearchBar } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { selectDest, addFav } from '../actions/locationActions';
 import PropTypes from 'prop-types';
+import { Feather} from '@expo/vector-icons';
+
 
 
 class SearchStoreResults extends Component {
@@ -88,7 +90,6 @@ class SearchStoreResults extends Component {
                 [
                   { text: 'Set as "My Favivrate"', onPress: () => {
                     this.props.addFav(item);
-                    console.log(this.props.fav)
                     alert(`${item.name} has saved in your Fav List`);
                     console.log('Fav Saved')} },
                   {
@@ -125,11 +126,16 @@ class SearchStoreResults extends Component {
   }
 }
 
+SearchStoreResults.navigationOptions = {
+  tabBarIcon: <Feather  name="search" size={20} />,
+  tabBarLabel: "Search Stores in Tunnel"
+  }
+
 
 SearchStoreResults.propTypes = {
   selectDest: PropTypes.func.isRequired,
   addFav: PropTypes.func.isRequired,
-  destInfo: PropTypes.object.isRequired
+  destInfo: PropTypes.object.isRequired,
 
 };
 
@@ -138,6 +144,7 @@ const mapStateToProp = (state) => {
   return {
     data: state.locationReducer.data,
     destInfo: state.locationReducer.destInfo,
+  
   }
 }
 

@@ -52,19 +52,13 @@ const switchNavigator = createSwitchNavigator({
 
   mainFlow: createBottomTabNavigator({
     Login,
-    screenFlow: createStackNavigator({
-      // ChooseSite: ChooseSiteScreen,
-      SavedList: SavedListScreen,
-      ViewDetail: ViewDetailScreen,
-      Map: MapScreen,
-      ManualUpdate: ManualUpdateScreen,
-      SearchResults: SearchResultsScreen,
-    }),
+    FavList: SavedListScreen,
+
     
     SearchResults: SearchResultsScreen,
     Map: MapScreen,
-    // ManualUpdate: ManualUpdateScreen,
-    Account: AccountScreen
+    Account: AccountScreen,
+    
   }),
 });
 

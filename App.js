@@ -80,17 +80,6 @@ const store = createStore(combineReducer, applyMiddleware(thunk));
 store.dispatch(loadData());
 
 
-
-
-// App.propTypes = {
-//   data: PropTypes.array.isRequired,
-//   newCoord: PropTypes.string.isRequired,
-//   destInfo: PropTypes.object.isRequired,
-// };
-
-
-
-
 export default () => {
 
 
@@ -110,11 +99,4 @@ export default () => {
         </AuthProvider>
       </Provider>
     )
-
-
-
-
-
-
-
 }

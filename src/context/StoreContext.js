@@ -1,5 +1,5 @@
 import createDataContext from './createDataContext'
-import locatorApi from '../api/locator'
+// import locatorApi from '../api/locator'
 
 const storeReducer = (state, action) => {
     switch (action.type) {
@@ -15,12 +15,12 @@ const fetchStores = dispatch => async () => {
     dispatch({ type: 'fetch_stores', payload: response.data })
 };
 
-const createStore = dispatch => async (name, locations) => {
-    await locatorApi.post('/stores', { name, locations })
-};
+// const createStore = dispatch => async (name, locations) => {
+//     await locatorApi.post('/stores', { name, locations })
+// };
 
 export const { Provider, Context } = createDataContext (
     storeReducer,
-    { fetchStores, createStore },
+    { fetchStores },
     []
 )

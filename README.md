@@ -1,4 +1,5 @@
 # OrangeLocator ![First Screenshot](public/icon.png)
+![screenshot1](public/First.png)<br/>
 Downtown's "underground" is a system of tunnels 20 feet below Houston's downtown streets and more than 6 miles long. Having started years ago as a tunnel between two downtown movie theaters, today it includes restaurants and service retail and connects 95 city blocks. 
 The main issue about tunnels is navigation. Mobile is not working there, public wi-fi is poorly provided. Normal mobile navigation is almost useless in tunnels, so it is easy to get lost there.<br/>
 **The purpose of our project** is to provide simple user-friendly offline navigation in Houston Downtown tunnels using custom QR-codes.
@@ -6,10 +7,13 @@ The main issue about tunnels is navigation. Mobile is not working there, public 
 ## How to use OrangeLocator
 When the user first launches the app on the phone, it is necessary 
 to sign up and sign in. <br/>
-![screenshot](public/signup.jpg)
-![screenshot2](public/signin.jpg)
+![screenshot](public/signup.jpg) ![screenshot2](public/signin.jpg)
+<br/>
 
-The user opens the OrangeLocation app right before going down to the tunnels. The app shows the map of the tunnels.
+The user opens the OrangeLocation app right before going down to the tunnels. <br/>
+The app shows the map of the tunnels.
+![screenshot](public/map.jpg)
+
 
 
 

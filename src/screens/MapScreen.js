@@ -16,7 +16,9 @@ import MapView, { Polyline, Marker, Callout, AnimatedRegion } from 'react-native
 import { requestPermissionsAsync, watchPositionAsync, Accuracy } from 'expo-location';
 import '../components/_mockLocations';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
+
 import { Ionicons, Feather, FontAwesome } from '@expo/vector-icons';
+
 import { redLinePoints, greenLinePoints, brownLinePoints, blueLinePoints, orangeLinePoints, darkblueLinePoints } from '../context/mapLines';
 let mapStyle = require('../context/mapStyle.json');
 
@@ -98,6 +100,7 @@ class MapScreen extends React.Component {
     // console.log("destInfo-------------------from props")
     // console.log(JSON.stringify(this.props.destInfo));
     // console.log(this.props.destInfo);
+
     // console.log("the location log---------------------------", this.props.locationLog);
     // console.log(this.props.destInfo);
     // console.log("FAV LIST", this.props.fav)

@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { View, Text, FlatList, ActivityIndicator, Alert } from 'react-native';
 import { ListItem, SearchBar } from 'react-native-elements';
 import { connect } from 'react-redux';
-import {selectDest} from '../actions/locationActions'
+import { selectDest } from '../actions/locationActions';
+import PropTypes from 'prop-types';
+
 
 class SearchStoreResults extends Component {
   constructor(props) {
@@ -11,6 +13,7 @@ class SearchStoreResults extends Component {
       loading: false,
       data: [],
       error: null,
+      destInfo: [],
     };
     // console.log(this.props.data);
     this.arrayholder = this.props.data
@@ -90,14 +93,14 @@ class SearchStoreResults extends Component {
                   },
                   {
                     text: 'OK',
-                     onPress: () => {
+                    onPress: () => {
                       console.log('OK Pressed');
                       console.log(item.name);
-                  
-                      selectDest(item);
+
+                      this.props.selectDest(item);
                       console.log(this.props.destInfo);
 
-                      // navigation.navigate('Map');
+                      // this.navigate('Map');
                     }
                   }
                 ],
@@ -116,20 +119,28 @@ class SearchStoreResults extends Component {
     );
   }
 }
+
+
+SearchStoreResults.propTypes = {
+  selectDest: PropTypes.func.isRequired,
+  destInfo: PropTypes.object.isRequired
+
+};
+
+
 const mapStateToProp = (state) => {
   return {
     data: state.locationReducer.data,
     destInfo: state.locationReducer.destInfo,
-
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  console.log("Select New Dest Updating to redux");
+// const mapDispatchToProps = (dispatch) => ({
+//   // console.log("Select New Dest Updating to redux");
 
-  return {
-    selectDest: (newDestObj) => dispatch(selectDest(newDestObj))
-  }
-}
+//   // return {
+//   //   selectDest: (newDestObj) => dispatch(selectDest(newDestObj))
+//   // }
+// })
 
-export default connect(mapStateToProp, mapDispatchToProps)(SearchStoreResults)
+export default connect(mapStateToProp, { selectDest })(SearchStoreResults)

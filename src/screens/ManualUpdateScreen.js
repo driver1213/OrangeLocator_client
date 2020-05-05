@@ -14,6 +14,8 @@ import { connect } from 'react-redux';
 import { Notifications } from 'expo';
 
 
+
+
 const { width } = Dimensions.get('window');
 const qrSize = width * 0.7;
 
